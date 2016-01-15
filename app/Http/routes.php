@@ -1,16 +1,23 @@
 <?php
 
 /*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It is a breeze. Simply tell Lumen the URIs it should respond to
-| and give it the Closure to call when that URI is requested.
-|
+|-------------------------------------------------------------------------------
+| Api Routes
+|-------------------------------------------------------------------------------
 */
 
-$app->get('/', function () use ($app) {
-    return $app->version();
-});
+Route::get('/api/pages', 'Api\PagesController@getAll');
+// Route::get('/api/emails/sendContactMail', 'Api\EmailsController@sendContactMail');
+
+/*
+|-------------------------------------------------------------------------------
+| Web Routes
+|-------------------------------------------------------------------------------
+*/
+
+// Route::group(['middleware' => ['web']], function () {
+//   //
+// });
+
+Route::get('/{path}', 'WebController@showPage')->where('path', '.*');
+
