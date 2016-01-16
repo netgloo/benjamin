@@ -3,14 +3,14 @@
   -- layouts.main
   -- --------------------------------------------------------------------------
   --
-  -- This view defines the 'main' layout and extends $app.
-  -- You can use this layout extending it with @extends('layouts.main') from
+  -- This view defines the 'main' layout and extends $benjamin.
+  -- You can use this layout extending it with extends('layouts.main') from
   -- other views.
   --
   -- --------------------------------------------------------------------------
   --}}
 
-@extends($app)
+@extends($benjamin)
 
 
 {{-- Title --}}
@@ -22,10 +22,10 @@
 {{-- Body --}}
 @section('body')
   
-  {{-- @include('layouts.header') --}}
+  {{-- include('layouts.header') --}}
 
   @yield('content')
 
-  {{-- @include('layouts.footer') --}}
+  {{-- include('layouts.footer') --}}
 
 @endsection

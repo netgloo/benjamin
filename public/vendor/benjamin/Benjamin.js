@@ -1,13 +1,13 @@
 /*!
- * Copyright 2016, Netgloo
+ * Copyright 2015, Netgloo
  * Released under the MIT License
  */
 
 var Benjamin = {
 
-  // --------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // PUBLICS
-  // --------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   /**
    * Set up the Benjamin object
@@ -83,9 +83,9 @@ var Benjamin = {
   },
 
 
-  // --------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // PRIVATES
-  // --------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   /**
    * True if Benjamin's is already configured. Used to handle multiple calls
@@ -258,8 +258,7 @@ var Benjamin = {
 
   /**
    * Return the page path string:
-   *   - Add a slash at the start if there isn't (this is needed for an IE 
-   *     fix).
+   *   - Add a slash at the start if there isn't (this is needed for an IE fix).
    *   - Removing any trailing slash if it is not the root directory
    *   - Removing the language directory from the path (_langDir)
    *

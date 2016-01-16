@@ -149,11 +149,16 @@ return [
     Illuminate\View\ViewServiceProvider::class,
 
     /*
+     * Benjamin Service Providers...
+     */
+    Netgloo\BenjaminCore\BenjaminCoreServiceProvider::class,
+
+    /*
      * Application Service Providers...
      */
-    App\Providers\AppServiceProvider::class,
-    App\Providers\AuthServiceProvider::class,
-    App\Providers\EventServiceProvider::class,
+    // App\Providers\AppServiceProvider::class,
+    // App\Providers\AuthServiceProvider::class,
+    // App\Providers\EventServiceProvider::class,
     App\Providers\RouteServiceProvider::class,
 
   ],

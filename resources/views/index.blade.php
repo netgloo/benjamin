@@ -4,7 +4,7 @@
   -- --------------------------------------------------------------------------
   --
   -- This page doesn't use any layout and directly extends $app.
-  -- Extending $app you can give it the parameter bodyClass that will be 
+  -- Extending $benjamin you can give it the parameter bodyClass that will be 
   -- used as 'class' attribute inside the 'body' tag for this page.
   -- Sections 'title' and 'body' are mandatory and you can use them to define
   -- respectively the page's title and the page's body.
@@ -12,7 +12,7 @@
   -- --------------------------------------------------------------------------
   --}}
 
-@extends($app, ['bodyClass' => 'some-class'])
+@extends($benjamin, ['bodyClass' => 'some-class'])
 
 
 {{-- Title --}}

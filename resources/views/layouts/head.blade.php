@@ -22,7 +22,7 @@
 <script defer src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 
 <!-- Benjamin.js -->
-<script defer src="/js/Benjamin.js"></script>
+<script defer src="/vendor/benjamin/Benjamin.js"></script>
 
 <!-- Custom javascript -->
 <script defer src="/js/main.js"></script>

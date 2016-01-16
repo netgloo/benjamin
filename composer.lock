@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ea1fee525914154e6d6bbf071697b5a1",
-    "content-hash": "8b1485987e7c5949da82435d403e52e8",
+    "hash": "2188321fa42e3e307a6c8ec369773e00",
+    "content-hash": "5ac460945524319506231f59271d33b0",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -685,6 +685,61 @@
                 "time"
             ],
             "time": "2015-11-04 20:07:17"
+        },
+        {
+            "name": "netgloo/benjamin_core",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/netgloo/benjamin_core.git",
+                "reference": "52f3b1c757fb7597430e18e69f84efeb6dd9c0a7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/netgloo/benjamin_core/zipball/52f3b1c757fb7597430e18e69f84efeb6dd9c0a7",
+                "reference": "52f3b1c757fb7597430e18e69f84efeb6dd9c0a7",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.1",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*",
+                "scrutinizer/ocular": "~1.1",
+                "squizlabs/php_codesniffer": "~2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Netgloo\\BenjaminCore\\": "src"
+                },
+                "files": [
+                    "src/Support/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Netgloo"
+                }
+            ],
+            "description": "Benjamin's core",
+            "homepage": "https://github.com/netgloo/benjamin_core",
+            "keywords": [
+                "benjamin",
+                "benjamin_core",
+                "netgloo"
+            ],
+            "time": "2016-01-16 13:13:51"
         },
         {
             "name": "nikic/php-parser",
