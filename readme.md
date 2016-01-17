@@ -70,7 +70,7 @@ To solve this you need a GitHub account, then simply follow instructions from th
 
 ### Configurations
 
-If you want to start developing the website you can (start now)[#start-the-application]. You don't have to configure anything.
+If you want to start developing the website you can [start now](#start-the-application). You don't have to configure anything.
 
 However, you may find useful configurations [here](https://laravel.com/docs/5.2/configuration#environment-configuration), like how to changing the timezone.
 
@@ -132,7 +132,29 @@ TODO
 
 ## Callbacks
 
-TODO
+``` javascript
+
+// Global callbacks
+
+Benjamin.on('init', function() {  /* ... */ });
+
+Benjamin.on('ready', function() {  /* ... */ });
+
+// Callbacks for page '/'
+
+Benjamin.on('/:ready', function() { /* ... */ });
+
+Benjamin.on('/:after', function() { /* ... */ });
+
+Benjamin.on('/:out', function() { /* ... */ });
+
+// Callbacks for page '/about'
+
+Benjamin.on('/about:ready', function() { /* ... */ });
+
+// ...
+
+```
 
 ### Init
 
