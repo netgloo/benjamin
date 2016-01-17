@@ -22,7 +22,7 @@ The main aim of Benjamin is to provide a platform for small and light websites, 
 
 ### Who is using Benjamin?
 
-Netgloo's website is built using Benjamin. Take a look [here](http://netgloo.com/en).
+Netgloo's website is built using Benjamin. Take a look: [http://netgloo.com/en](http://netgloo.com/en).
 
 
 ## Getting started
@@ -136,23 +136,73 @@ TODO
 
 ### Init
 
-TODO
+Initialize your things.
 
-### Before
-
-TODO
-
-### After
-
-TODO
+- Executed only once, when the website is loaded from the server.
+- Executed before any `ready` callback.
 
 ### Ready
 
-TODO
+The page is ready.
+
+- Executed when the page is loaded form the server in the JQuery's document ready event (`$(document).ready`) and after the `display` callback when the page is changed client-side.
+- This is a good place for binding things on your document (e.g. using `$('.some-element').on(...)`).
+
+<!--
+### Before
+
+Before a page is changed.
+
+- If a link to `/a` is clicked this callback is executed before the content of `/a` is inside the body.
+- It is **not** executed when the page is loaded from the server. 
+- You can stop to change page avoiding to call the `next()` function. This will also prevent `after` and `ready` callbacks to be executed.
+
+Example: we are on page `/`, click on a link for page `/a`, the `before` callback is executed and inside the callback's function we have:
+
+- Current page is `/`.
+- You need to call `next()` to display the page `/a`.
+-->
+
+### After
+
+After a page is changed.
+
+- If a link to `/a` is clicked, this callback is executed when the content of the page `/a` is inside the body.
+- The document's title and the page url refers to page `/a`.
+- It is **not** executed when the page is loaded from the server.
+
+<!--
+- **Hint**: this is a good place for page transition effect since the page content is inside the `body` and ...
+-->
+
+Example: we are on page `/`, a link for page `/a` is clicked, the `after` callback for page `/a` is executed and inside the callback's function we have:
+
+- The body's content is the page `/a`.
+- Call next() to execute the `ready` callback for page `/a`.
 
 ### Out
 
-TODO
+The page is going to be changed with another page.
+
+- If you are on page `/a` and a link is clicked, this callback is executed before the content of `/a` is replaced.
+- It is **not** executed when the page is loaded from the server. 
+- You can stop to change page avoiding to call the `next()` function inside the callback. This will also prevent `after` and `ready` callbacks to be executed.
+
+Example: we are on page `/a`, a link for page `/` is clicked, the `out` callback for page `/a` is executed and inside the callback's function we have:
+
+- The body's content is the page `/a`.
+- You need to call `next()` to display the page `/`.
+
+### Example of a callbacks chain
+
+We are on page `/` and we click on a link for `/a`, following callbacks are executed:
+
+1. `out` global
+1. `out` for page `/`
+1. `after` global
+1. `after` for page `/a`
+1. `ready` global
+1. `ready` for page `/a`
 
 
 ## Page transitions
@@ -161,6 +211,10 @@ TODO
 
 
 ## Scripts
+
+TODO
+
+### Google Analytics
 
 TODO
 
@@ -265,7 +319,7 @@ Each folder should be a supported language:
 
 Within each language specific folder you should put a `messages.php` file containing language strings.
 
-Learn more about the `lang` folder and language strings in Laravel from here: https://laravel.com/docs/5.2/localization#introduction
+Learn more about the `lang` folder and language strings in Laravel from [here](https://laravel.com/docs/5.2/localization#introduction).
 
 **Note**: if there is only one langauge directory the multi-language support is not enabled.
 
@@ -278,16 +332,19 @@ Inside the `.env` configuration file you should set these values:
 - `APP_LOCALE`: the default locale. This locale will be used to serve your website in the default language, without any language sub-directory.
 - `APP_FALLBACK_LOCALE`: if a string is not translated for the current locale, will be used this one as fallback (usually it is setted equals to the default locale).
 
-#### Localized texts inside views
+#### Translated texts inside views
 
-You can use the `trans` helper function to translate messages inside your views.
-For example:
+You can use the `trans` helper function to translate messages inside your views. For example:
 
     <h1>{{ trans('messages.welcome') }}</h1>
 
-Will print the string with key `welcome` inside the `messages.php` file for the current locale. The right `messages.php` file will be choosen from the folder with the name of the current locale (e.g. the folder `en/` for the locale `en`) inside `resources/lang/`.
+Will print the string with key `welcome` inside the `messages.php` file for the current locale.
 
-Take a look at the Laravel's documentation for more features about how to use `trans` function and messages files: https://laravel.com/docs/5.2/localization#basic-usage
+<!--
+The right `messages.php` file will be choosen from the folder with the name of the current locale (e.g. the folder `en/` for the locale `en`) inside `resources/lang/`.
+-->
+
+Take a look at the [Laravel's documentation](files: https://laravel.com/docs/5.2/localization#basic-usage) for more features about how to use `trans` function and messages.
 
 #### Links
 
@@ -303,7 +360,7 @@ Absolute paths (e.g. `/about`) are translated for the current language, automati
 Relative paths (e.g. `page1`) are translated to absolute paths where the root is the language subdirectory.
 Absolute urls (e.g. `http://www.example.com`) are left as they are. 
 
-So, if the current locale is `en` (not setted as default language) and the current page is `/page1`, then the three links above will be translated to:
+So, if the current locale is `en` (and it is not setted as default) and the current page is `/page1`, then the three links above will be translated to:
 
     <a href="/en/about">About</a>
     <a href="/en/page2">Page 2</a>
@@ -315,8 +372,8 @@ In the frontend you want to provide a way for the user to switch the language. Y
 
 Use the `langswitch` helper function to create links for switching languages on the current page:
 
-    <a href="{{ langswitch('en') }}" data-bj-ignore="true">English</a>
-    <a href="{{ langswitch('es') }}" data-bj-ignore="true">Spanish</a>
+    <a href="{{ langswitch('en') }}" data-bj-ignore >English</a>
+    <a href="{{ langswitch('es') }}" data-bj-ignore >Spanish</a>
 
 Supposing the current page is `/about` and the default language is `es`, the code above will produce these links:
 
@@ -325,7 +382,7 @@ Supposing the current page is `/about` and the default language is `es`, the cod
 
 Note that you don't have to give the current page to `langswitch`, it will be automatically deduced on each page.
 
-The `data-bj-ignore="true"` attribute will tell to Benjamin.js to ignore these links from the "on-client" navigation. When a user will click one of these links the website will be reloaded from the server in the selected language.
+The `data-bj-ignore` attribute will tell to Benjamin.js to ignore these links from the "on-client" navigation. When a user will click one of these links the website will be reloaded from the server in the selected language.
 
 #### Example
 
