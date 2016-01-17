@@ -50,7 +50,7 @@ $ php artisan key:generate
 
 #### Troubleshooting
 
-Do to GitHub's API rate limits, can happen that you will get an error like this when you run `composer install`:
+Due to GitHub's API rate limits, can happen that you will get an error like this when you run `composer install`:
 
 ``` bash
 Loading composer repositories with package information
@@ -66,11 +66,11 @@ Token (hidden):
 To solve this you need a GitHub account, then simply follow instructions from the error message, that are:
 
 - Go to https://github.com/settings/tokens/new?scopes=repo&description=Composer+on+my+PC to retrive a token
-- Give the token to composer pasting it after `Token (hidden):`
+- Give the token to composer pasting it when prompted, after `Token (hidden):`
 
 ### Configurations
 
-If you want to start developing the website you can start now. You don't have to configure anything.
+If you want to start developing the website you can (start now)[#start-the-application]. You don't have to configure anything.
 
 However, you may find useful configurations [here](https://laravel.com/docs/5.2/configuration#environment-configuration), like how to changing the timezone.
 
@@ -221,7 +221,7 @@ TODO
 ### Split Benjamin.config in multiple files
 
 Perhaps you want to better organize your code and have a javascript file for each page.
-You can easly split the Benjamin's configuration on multiple javascript files. For example:
+You can easily split the Benjamin's configuration on multiple javascript files. For example:
 
     // main.js
     
