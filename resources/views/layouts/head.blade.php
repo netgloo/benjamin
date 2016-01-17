@@ -19,7 +19,11 @@
 <link href="/css/main.css" rel="stylesheet" type="text/css" />
 
 <!-- JQuery (Required) -->
-<script defer src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script defer src="/vendor/jquery/jquery-1.11.3.min.js"></script>
+
+<!-- Velocity.js + UI Pack -->
+<script defer src="/vendor/velocity/velocity.min.js"></script>
+<script defer src="/vendor/velocity/velocity.ui.min.js"></script>
 
 <!-- Benjamin.js -->
 <script defer src="/vendor/benjamin/Benjamin.js"></script>
