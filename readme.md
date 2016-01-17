@@ -1,10 +1,10 @@
 ## Benjamin
 
-Benjamin is a platform for easily building *static websites* with a really instant and smooth navigation out of the box.
+Benjamin is a PHP and Javascript platform for easily building *static websites* with a really instant and smooth navigation out of the box.
 
 You can try a Benjamin powered website here: http://benjamin.netgloo.com
 
-### We love fast websites
+### Everyone loves fast websites
 
 Benjamin is made for building fast websites. With Benjamin you can rapidly create websites that load fast and with an amazing smooth and instant navigation between pages.
 
@@ -14,48 +14,67 @@ Benjamin is easy to use. Also you will find some very useful features out of the
 
 ### Run everywhere
 
-Almost all hosting services supports PHP nowadays, also on basic and cheaper plans. Benjamin is built on (Laravel)[http://laravel.com/] and it only requires (PHP with some basic extensions)[https://laravel.com/docs/5.2#installation]. Very likely it will run on your current and favourite hosting service.
+Almost all hosting services supports PHP nowadays, also on basic and cheaper plans. Benjamin is built on [Laravel](http://laravel.com/) and it only requires [PHP with some basic extensions](https://laravel.com/docs/5.2#installation). Very likely it will run on your current and favourite hosting service.
 
 ### Flexible
 
-The main aim of Benjamin is to provide a platform for small and light websites, but no ones will stopping you to add new features to it as you need. Since it is built on top of (Laravel)[http://laravel.com/] will be really easy add your custom functionality, as new routes, controllers, a database connection and anything your website needs.
+The main aim of Benjamin is to provide a platform for small and light websites, but no ones will stopping you to add new features to it as you need. Since it is built on top of [Laravel](http://laravel.com/) will be really easy add your custom functionality, as new routes, controllers, a database connection and anything your website needs.
 
 ### Who is using Benjamin?
 
-Netgloo's website is built using Benjamin. Take a look here: http://netgloo.com/en
+Netgloo's website is built using Benjamin. Take a look here: [netgloo.com](http://netgloo.com/en).
+
 
 ## Getting started
 
-Benjamin is a (Laravel)[http://laravel.com/docs/installation] project, already configured, with a couple of Controllers and a Javascript library.
+Benjamin is a pre-configured (Laravel)[http://laravel.com/docs/installation] project. In order to getting started, you have only to download it, run composer and start the Laravel application with `php artisan serve`. Then you can start to build your website.
 
-In order to getting started, you have only to download it, run composer, setup the `.env` file and start the Lumen application with `php artisan serve`. Then you can start to build your website.
+### Requirements
 
-#### Installation
+You need to have (composer)[http://getcomposer.org/] installed on your machine.
 
-TODO
+Also, these are PHP requirements from (Laravel)[https://laravel.com/docs/5.2#installation]:
 
-    $ cd benjamin/
-    $ composer install
+- PHP >= 5.5.9
+- Extensions: OpenSSL PHP, PDO PHP, Mbstring PHP, Tokenizer PHP.
 
-Copy the `.env.example` file to `.env` and set the property `APP_KEY` with a 
-random key of 32 characters for security reasons.
+### Installation
 
-More here: http://lumen.laravel.com/docs/installation#configuration
+Download Benjamin 1.0 from (here)[https://github.com/netgloo/benjamin/archive/1.0.0.zip], extract it and rename the folder with your project name, e.g. `my-website`. Then from inside the project's folder type:
 
-Key generator:
-http://www.unit-conversion.info/texttools/random-string-generator/
+``` bash
+$ composer install
+$ cp .env.example .env
+$ php artisan key:generate
+```
 
-##### Troubleshooting
+#### Troubleshooting
 
-(composer key)
+Do to GitHub's API rate limits, can happen that you will get an error like this when you run `composer install`:
 
-TODO
+``` bash
+Loading composer repositories with package information
+Installing dependencies (including require-dev) from lock file
+- Installing username/repo (1.2.3)
+Downloading: Connecting...
+Could not fetch https://api.github.com/repos/username/repo/zipball/863df9687835c62aa423a22412d26fa2ebde3fd3, please create a GitHub OAuth token to go over the API rate limit
+Head to https://github.com/settings/tokens/new?scopes=repo&description=Composer+on+my+PC
+to retrieve a token. It will be stored in "/home/user/.composer/auth.json" for future use by Composer.
+Token (hidden):
+```
 
-#### Configuration
+To solve this you need a GitHub account, then simply follow instructions from the error message, that are:
 
-TODO
+- Go to https://github.com/settings/tokens/new?scopes=repo&description=Composer+on+my+PC to retrive a token
+- Give the token to composer pasting it after `Token (hidden):`
 
-#### Start the application
+### Configurations
+
+If you want to start developing the website you can start now. You don't have to configure anything.
+
+Anyway you may find useful configurations (here)[https://laravel.com/docs/5.2/configuration#environment-configuration], like how to changing the timezone.
+
+### Start the application
 
     $ php artisan serve
 
@@ -388,8 +407,10 @@ TODO
 TODO
 -->
 
-## License
+## Credits
 
-Benjamin is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)## License
+A lot of credits go to [Lavarel](http://laravel.com) since Benjamin leans on this wonderful PHP framework.
+
+## License
 
 Benjamin is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
