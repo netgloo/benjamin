@@ -1,21 +1,22 @@
-Benjamin.config({
+Benjamin.on({
   
   /**
-   * This callback is executed before any page is visited but it is NOT 
-   * executed when the page is loaded from the server.
+   * This callback is executed when the page is ready. Use this callback 
+   * instead of JQuery's $( document ).ready().
    *
-   * This function is always executed before any other "page-specific" before 
-   * callback.
+   * This function is always executed before any other "page-specific" ready 
+   * callback
    */
-  'before': function(next) {
-    console.log('before');
-    // Do not forget to call next!
-    return next();
+  'ready': function() {
+    console.log('ready');
+    // Here there is no "next" since the page is ready and no more 
+    // operations are required
+    return;
   },
-  
+
 
   /**
-   * This callback is executed just after a page is visited but it is NOT 
+   * This callback is executed just after a page is changed but it is NOT 
    * executed when the page is loaded from the server.
    *
    * This function is always executed before any other "page-specific" after 
@@ -37,84 +38,72 @@ Benjamin.config({
 
 
   /**
-   * This callback is executed when the page is ready. Use this callback 
-   * instead of JQuery's $( document ).ready().
+   * This callback is executed when this page is going out to be changed with
+   * another page. It is NOT executed when the page is loaded from the server.
    *
-   * This function is always executed before any other "page-specific" ready 
-   * callback
+   * This function is always executed before any other "page-specific" before 
+   * callback.
    */
+  'out': function(next) {
+    console.log('out');
+    // Do not forget to call next!
+    return next();
+  }
+
+});
+
+
+// ----------------------------------------------------------------------------
+// Page /
+// ----------------------------------------------------------------------------
+// 
+// Here you can write your callbacks for the index page.
+// 
+// ----------------------------------------------------------------------------
+
+Benjamin.on('/', {
+
   'ready': function() {
-    console.log('ready');
-    // Here there is no "next" since the page is ready and no more 
-    // operations are required
+    console.log('ready /');
     return;
   },
 
+  'after': function(next) {
+    console.log('after /');
+    return next();
+  },
 
-  // --------------------------------------------------------------------------
-  // Page /
-  // --------------------------------------------------------------------------
+  'out': function(next) {
+    console.log('out /');
+    return next();
+  }
 
-  '/': {
-
-    /**
-     * This callback is executed before this page is rendered but it is NOT 
-     * executed when the page is loaded from the server.
-     */
-    'before': function(next) {
-      console.log('before /');
-      // Do not forget to call next!
-      return next();
-    },
+});
 
 
-    /**
-     * This callback is executed after this page is rendered but it is NOT 
-     * executed when the page is loaded from the server.
-     */
-    'after': function(next) {
-      console.log('after /');
-      // Do not forget to call next!
-      return next();
-    },
+// ----------------------------------------------------------------------------
+// Page /about
+// ----------------------------------------------------------------------------
+// 
+// And here callbacks for the about page.
+// 
+// ----------------------------------------------------------------------------
 
+Benjamin.on('/about', {
 
-    /**
-     * This callback is executed when this page is ready (just after the 
-     * 'after' callback) and when this page is loaded from the server.
-     */
-    'ready': function() {
-      console.log('ready /');
-      // Here there is no "next" since the page is ready and no more 
-      // operations are required
-      return;
-    },
+  'ready': function() {
+    console.log('ready /about');
+    return;
+  },
 
-  }, 
+  'after': function(next) {
+    console.log('after /about');
+    return next();
+  },
 
-
-  // --------------------------------------------------------------------------
-  // Page /about
-  // --------------------------------------------------------------------------
-
-  '/about': {
-
-    'before': function(next) {
-      console.log('before /about');
-      return next();
-    },
-
-    'after': function(next) {
-      console.log('after /about');
-      return next();
-    },
-
-    'ready': function() {
-      console.log('ready /about');
-      return;
-    },
-
-  }, 
-
+  'out': function(next) {
+    console.log('out /about');
+    return next();
+  }
 
 });

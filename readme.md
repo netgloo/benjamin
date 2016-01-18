@@ -82,7 +82,7 @@ From the application root's folder just type:
 $ php artisan serve
 ```
 
-Then visit `http://localhost:8000/` and you will see a welcome page.
+Then visit [http://localhost:8000](http://localhost:8000) and you will see a welcome page.
 
 Now you can start adding your own [pages](#pages) or [folders](#folders).
 
@@ -133,24 +133,30 @@ TODO
 ## Callbacks
 
 ``` javascript
+// Global callbacks (do NOT put them inside $(document).ready)
 
-// Global callbacks
-
-Benjamin.on('init', function() {  /* ... */ });
-
-Benjamin.on('ready', function() {  /* ... */ });
+Benjamin.on({
+  'init': function() {  /* ... */ },
+  'ready', function() {  /* ... */ },
+  'after', function() {  /* ... */ },
+  'out', function() {  /* ... */ }
+});
 
 // Callbacks for page '/'
 
-Benjamin.on('/:ready', function() { /* ... */ });
-
-Benjamin.on('/:after', function() { /* ... */ });
-
-Benjamin.on('/:out', function() { /* ... */ });
+Benjamin.on('/', {
+  'ready': function() { /* ... */ },
+  'after': function() { /* ... */ },
+  'out': function() { /* ... */ }
+});
 
 // Callbacks for page '/about'
 
-Benjamin.on('/about:ready', function() { /* ... */ });
+Benjamin.on('/about', {
+  'ready': function() { /* ... */ },
+  'after': function() { /* ... */ },
+  'out': function() { /* ... */ }
+});
 
 // ...
 
@@ -162,13 +168,17 @@ Initialize your things.
 
 - Executed only once, when the website is loaded from the server.
 - Executed before any `ready` callback.
+- Only global version exists.
 
 ### Ready
 
 The page is ready.
 
 - Executed when the page is loaded form the server in the JQuery's document ready event (`$(document).ready`) and after the `display` callback when the page is changed client-side.
+- Executed also when browsing the history.
 - This is a good place for binding things on your document (e.g. using `$('.some-element').on(...)`).
+- Both global and per-page versions exists. The global one will be always executed first.
+
 
 <!--
 ### Before
@@ -190,30 +200,23 @@ Example: we are on page `/`, click on a link for page `/a`, the `before` callbac
 After a page is changed.
 
 - If a link to `/a` is clicked, this callback is executed when the content of the page `/a` is inside the body.
-- The document's title and the page url refers to page `/a`.
-- It is **not** executed when the page is loaded from the server.
+- The document's title and the page url refers to the page `/a`.
+- It is **not** executed when the page is loaded from the server neither browsing the history.
+- Both global and per-page versions exists. The global one will be always executed first.
+- Remember to call `next()` to execute the `ready` callback for page `/a`.
 
 <!--
 - **Hint**: this is a good place for page transition effect since the page content is inside the `body` and ...
 -->
-
-Example: we are on page `/`, a link for page `/a` is clicked, the `after` callback for page `/a` is executed and inside the callback's function we have:
-
-- The body's content is the page `/a`.
-- Call next() to execute the `ready` callback for page `/a`.
 
 ### Out
 
 The page is going to be changed with another page.
 
 - If you are on page `/a` and a link is clicked, this callback is executed before the content of `/a` is replaced.
-- It is **not** executed when the page is loaded from the server. 
-- You can stop to change page avoiding to call the `next()` function inside the callback. This will also prevent `after` and `ready` callbacks to be executed.
-
-Example: we are on page `/a`, a link for page `/` is clicked, the `out` callback for page `/a` is executed and inside the callback's function we have:
-
-- The body's content is the page `/a`.
-- You need to call `next()` to display the page `/`.
+- It is **not** executed when the page is loaded from the server neither browsing the history.
+- Both global and per-page versions exists. The global one will be always executed first.
+- Remember to call `next()` to execute the `after` callback for the page that will be displayed.
 
 ### Example of a callbacks chain
 
@@ -231,6 +234,13 @@ We are on page `/` and we click on a link for `/a`, following callbacks are exec
 
 TODO
 
+### Effects
+
+TODO
+
+<!--
+Important: you should avoid to apply transitions effects directly to the `body` element. 
+-->
 
 ## Scripts
 
@@ -245,49 +255,39 @@ TODO
 Perhaps you want to better organize your code and have a javascript file for each page.
 You can easily split the Benjamin's configuration on multiple javascript files. For example:
 
-    // main.js
-    
-    Benjamin.config({
-    
-      'ready': function() {
-        //
-      }
-      
-      //
-    
-    });
-    
-    // index.js
-    
-    Benjamin.config({
-      
-      '/': {
-    
-        'ready': function() {
-          //
-        }
-      
-        //
-    
-      }
-    
-    });
-    
-    // about.js
-    
-    Benjamin.config({
-      
-      '/about': {
-    
-        'ready': function() {
-          //
-        }
-      
-        //
-    
-      }
-    
-    });
+``` javascript
+// main.js
+
+Benjamin.on({
+
+  'ready': function() {
+    //
+  }
+  
+  //
+
+});
+
+// index.js
+
+Benjamin.on('/', {
+  
+  'ready': function() {
+    //
+  }
+  
+});
+
+// about.js
+
+Benjamin.config('/about', {
+  
+  'ready': function() {
+    //
+  }
+
+});
+```
 
 Obviously you must avoid to repeat the global configuration and pages configurations in more than one place.
 
@@ -463,26 +463,7 @@ TODO
 
 TODO
 
-Fast navigation is a Lumen project with a predefined router, a simple (about 
-100 lines of code) Controller class and some Blade views (inside the app 
-folder). Plus a JQuery plugin client side we built appositely to support what 
-is created server side.
-
-Why Laravel?
-
-- Is PHP: you can use it in almost any (shared) hosting, also with basic 
-  plans.
-- Laravel is one of the most used PHP framework today so likely you already 
-  know it or maybe you will soon.
-- Have a great, simple and clear documentation.
-- Blade is the template engine and it is very simple to learn and use so
-  if you don't know it you can learn without very much effort.
-- Is a PHP framework we already know and used (for reasons above) and we didn't 
-  want to learn some other PHP framework.
-
-How it works: details
-
-=> Link al Blog
+How it works: details => Link to Netgloo's Blog
 
 -->
 

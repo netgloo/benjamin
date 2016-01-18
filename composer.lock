@@ -688,16 +688,16 @@
         },
         {
             "name": "netgloo/benjamin_core",
-            "version": "1.0.2",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/netgloo/benjamin_core.git",
-                "reference": "52f3b1c757fb7597430e18e69f84efeb6dd9c0a7"
+                "reference": "8d1e29a43cb64758f3cfe7f086882d55d9b72a83"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/netgloo/benjamin_core/zipball/52f3b1c757fb7597430e18e69f84efeb6dd9c0a7",
-                "reference": "52f3b1c757fb7597430e18e69f84efeb6dd9c0a7",
+                "url": "https://api.github.com/repos/netgloo/benjamin_core/zipball/8d1e29a43cb64758f3cfe7f086882d55d9b72a83",
+                "reference": "8d1e29a43cb64758f3cfe7f086882d55d9b72a83",
                 "shasum": ""
             },
             "require": {
@@ -739,7 +739,7 @@
                 "benjamin_core",
                 "netgloo"
             ],
-            "time": "2016-01-16 13:13:51"
+            "time": "2016-01-18 15:37:32"
         },
         {
             "name": "nikic/php-parser",

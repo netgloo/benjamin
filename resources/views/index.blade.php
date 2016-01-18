@@ -23,9 +23,11 @@
 
 {{-- Body --}}
 @section('body')
-  
-  <h1>Welcome</h1>
 
-  <a href="/about">Go to About</a>
+  <div class="content">
+    <h1>Welcome</h1>
+
+    <a href="/about">Go to About</a>
+  </div>
 
 @endsection
