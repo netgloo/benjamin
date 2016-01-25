@@ -29,24 +29,23 @@ Netgloo's website is built using Benjamin. Take a look: [http://netgloo.com/en](
 
 ## Contents
 
-* [Getting started](#getting-started)
-* [Application structure](#application-structure)
+* [Getting Started](#getting-started)
 * [Website Pages](#website-pages)
 * [Layouts](#layouts)
-* [Multi-language](#multi-language)
+* [Multi-Language](#multi-language)
 * [Scripts](#scripts)
 * [Callbacks](#callbacks)
-* [Page transitions](#page-transitions)
+* [Page Transitions](#page-transitions)
 * [Forms](#forms)
 * [Workflow](#workflow)
 * [Production](#production)
 * [Optimizations](#optimizations)
-* [How it works](#how-it-works)
+* [How It Works](#how-it-works)
 * [Credits](#credits)
 * [License](#license)
 
 
-## Getting started
+## Getting Started
 
 Benjamin is a pre-configured [Laravel](http://laravel.com/docs/installation) application. In order to getting started, you have only to [download it](#installation), run composer and start the application with `php artisan serve`. Then you can start to build your website.
 
@@ -91,15 +90,15 @@ To solve this you need a GitHub account, then simply follow instructions from th
 - Go to https://github.com/settings/tokens/new?scopes=repo&description=Composer+on+my+PC to retrive a token
 - Give the token to composer pasting it when prompted, after `Token (hidden):`
 
+<!--
 ### Configurations
 
 If you want to start developing the website you can [start now](#start-the-application). You don't have to configure anything more.
 
-<!--
 However, if you need some advanced configuration, you may find some useful information on how to configure a new Laravel application from [here](https://laravel.com/docs/5.2/configuration).
 -->
 
-### Start the application
+### Start The Application
 
 From the application root's folder just type:
 
@@ -109,11 +108,11 @@ $ php artisan serve
 
 Then visit [http://localhost:8000](http://localhost:8000) and you will see a welcome page.
 
-Now you can start adding your own [web pages](#website-pages) or [folders](#folders) and building your own website.
+Now you can start adding your own [web pages](#website-pages) and [folders](#folders), and building your website.
 
 **Note**: in the production server you shouldn't use `php artisan serve` but rely on Apache (or Nginx) instead. Take a look on the [Production section](#production) for more informations.
 
-## Application structure
+### Application Structure
 
 A Benjamin website is a Laravel application, so you can take a look [here](https://laravel.com/docs/5.2/structure#the-root-directory) for any detail about the whole application's structure.
 
@@ -130,17 +129,19 @@ You can place all your website pages inside the folder `/resources/views`. Each 
 
 A Blade view is essentially a PHP file plus some really nice directives and an easy way for defining pages' layouts. If you don't already know Blade, you will learn it effortless and very quickly. Take a look [here](https://laravel.com/docs/5.2/blade) for more informations.
 
-### Page's structure
+### Page's Structure
 
 To be well processed by Benjamin, each view file must:
 
 1. Extend `$benjamin`.
-1. Define a section `title`.
-1. Define a section `body`.
+1. Define a section `title`: here you should set the page's title that will go inside the <title> tag.
+1. Define a section `body`: here you can put the page's HTML content that will be inside the `<body>` tag.
 
 For example, this is a minimum structure for a valid Benjamin's page:
 
-```
+```HTML
+<!-- View stored in resources/views/index.blade.php -->
+
 @extends($benjamin)
 
 @section('title')
@@ -152,9 +153,7 @@ For example, this is a minimum structure for a valid Benjamin's page:
 @endsection
 ```
 
-Inside the section `title` you can put the page's title that will go inside the `<title>` tag in the final HTML page. Inside the `body` section you can put the page's content that will be inside the `<body>` tag.
-
-### Body's class attribute
+### Body's Class Attribute
 
 You may want to specify a value for the body's `class` attribute. You can do it with the `bodyClass` parameter, extending `$benjamin`:
 
@@ -165,7 +164,7 @@ You may want to specify a value for the body's `class` attribute. You can do it 
 The value `some-class` will be placed inside the `class` attribute in the `<body>` tag.
 
 
-### Page's head
+### Page's Head
 
 The content of the `<head>` tag will be shared between all the pages. Only the `<title>` will change when a page is changed.
 
@@ -174,7 +173,7 @@ You can find the head's content inside the view `layouts/head.blade.php`.
 You can modify the head's content as you want, but you should leave here JQuery and Benjamin.js for the proper functioning of Benjamin platform.
 
 
-### Add new pages
+### Add New Pages
 
 Each view you will add inside `/resources/views` will be available as a website page at the URL composed by the view's path without the `.blade.php` extension. For example:
 
@@ -193,12 +192,16 @@ Reserved names:
 - Variable $app inside views
 
 
-### Index page
+### Index Page
 
 TODO
 
 
-### Ignored pages
+### Folders
+
+TODO
+
+### Ignored Pages And Folders
 
 Following pages will be ignored by Benjamin:
 
@@ -210,11 +213,7 @@ Following pages will be ignored by Benjamin:
 - Directory /app
 - Files not ending with '.blade.php'
 
-### Folders
-
-TODO
-
-### Error pages
+### Error Pages
 
 TODO
 
@@ -237,7 +236,7 @@ TODO
 TODO
 
 
-## Multi-language
+## Multi-Language
 
 Benjamin supports multi-language websites using sub-directories URL structure. 
 If you enable the multi-langauge support you will have, out of the box, something like this:
@@ -251,7 +250,7 @@ At the web site root will be served the website in your default language.
 
 If properly used, this method allow your website to be correctly indexed by search engines on all available languages.
 
-### Enable multi-langauge support
+### Enable Multi-Langauge Support
 
 You can enable the Benjamin's multi-langauge support simply adding language folders inside the `resources/lang` directory. 
 Each folder should be a supported language:
@@ -278,7 +277,7 @@ Inside the `.env` configuration file you should set these values:
 - `APP_LOCALE`: the default locale. This locale will be used to serve your website in the default language, without any language sub-directory. There must be a language folder inside `resources/lang` having this value.
 - `APP_FALLBACK_LOCALE`: if a string is not translated for the current locale, will be used this one as fallback (usually it is set equals to the default locale).
 
-### Translated texts inside views
+### Translated Texts Inside Views
 
 You can use the `trans` helper function to translate messages inside your views. For example:
 
@@ -312,7 +311,7 @@ So, if the current locale is `en` (and it is not set as default) and the current
     <a href="/en/some/page2">Page 2</a>
     <a href="http://www.example.com">Example</a>
 
-### Switch language
+### Switch Language
 
 In the frontend you may want to provide a way for the user to switch the language. You can do it with a link for each language you support.
 
@@ -487,7 +486,7 @@ The page is going to be changed with another page.
 - Both global and per-page versions exists. The global one will be always executed first.
 - Remember to call `next()` to execute the `after` callback for the page that will be displayed.
 
-### Example of a callbacks chain
+### Example Of A Callbacks Chain
 
 We are on page `/` and we click on a link for `/a`, following callbacks are executed:
 
@@ -499,7 +498,7 @@ We are on page `/` and we click on a link for `/a`, following callbacks are exec
 1. `ready` for page `/a`
 
 
-## Page transitions
+## Page Transitions
 
 TODO
 
@@ -516,7 +515,7 @@ Important: you should avoid to apply transitions effects directly to the `body` 
 
 TODO
 
-### Sending emails
+### Sending Emails
 
 TODO
 
@@ -525,15 +524,15 @@ TODO
 
 TODO
 
-### Build tool
+### Build Tool
 
 TODO
 
-### Working with SASS
+### Working With SASS
 
 TODO
 
-### Working with Javascript
+### Working With Javascript
 
 TODO
 
@@ -564,7 +563,7 @@ TODO
 
 -->
 
-## How it works
+## How It Works
 
 TODO
 
