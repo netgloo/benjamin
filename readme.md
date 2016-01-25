@@ -21,6 +21,15 @@ Almost all hosting services supports PHP nowadays, also on basic and cheaper pla
 The main aim of Benjamin is to provide a platform for small and light websites. But no ones will stopping you to add new features if you need them. If you already have some experience with [Laravel](http://laravel.com/) framework, you will find really easy add your custom functionalities, like new routes, controllers, a database connection and anything else your website needs.
 
 <!--
+### ???
+
+- URLs (pushState)
+- Server side rendering
+- Fallbacks (Progressive enanchment)
+
+-->
+
+<!--
 ### Who is using Benjamin?
 
 Netgloo's website is built using Benjamin. Take a look: [http://netgloo.com/en](http://netgloo.com/en).
@@ -28,43 +37,43 @@ Netgloo's website is built using Benjamin. Take a look: [http://netgloo.com/en](
 
 ## Contents
 
-* [Getting started](getting-started)
-  * [Requirements](requirements)
-  * [Installation](installation)
-  * [Configurations](configurations)
-  * [Start the application](start-the-application)
-* [Application structure](application-structure)
-* [Pages](pages)
-  * [Index page](index-page)
-  * [Add new pages](add-new-pages)
-  * [Folders](folders)
-  * [Error pages](error-pages)
-  * [Ready callback](ready-callback)
-  * [Links](links)
-* [Layouts](layouts)
-* [Callbacks](callbacks)
-  * [Init](init)
-  * [Ready](ready)
-  * [After](after)
-  * [Out](out)
-  * [Example of a callbacks chain](example-of-a-callbacks-chain)
-* [Page transitions](page-transitions)
-  * [Effects](effects)
-* [Scripts](scripts)
-  * [Google Analytics](google-analytics)
-* [Forms](forms)
-  * [Sending emails](sending-emails)
-* [Multi-language](multi-language)
-  * [Enable multi-language support](enable-multi-language-support)
-  * [Configurations](configurations)
-  * [Translated texts inside views](translated-texts-inside-views)
-  * [Links](links)
-  * [Switch language](switch-language)
-  * [Example](example)
-* [Put on production](put-on-production)
-* [Optimizations](optimizations)
-* [Credits](credits)
-* [License](license)
+* [Getting started](#getting-started)
+  * [Requirements](#requirements)
+  * [Installation](#installation)
+  * [Configurations](#configurations)
+  * [Start the application](#start-the-application)
+* [Application structure](#application-structure)
+* [Pages](#pages)
+  * [Index page](#index-page)
+  * [Add new pages](#add-new-pages)
+  * [Folders](#folders)
+  * [Error pages](#error-pages)
+  * [Ready callback](#ready-callback)
+  * [Links](#links)
+* [Layouts](#layouts)
+* [Callbacks](#callbacks)
+  * [Init](#init)
+  * [Ready](#ready)
+  * [After](#after)
+  * [Out](#out)
+  * [Example of a callbacks chain](#example-of-a-callbacks-chain)
+* [Page transitions](#page-transitions)
+  * [Effects](#effects)
+* [Scripts](#scripts)
+  * [Google Analytics](#google-analytics)
+* [Forms](#forms)
+  * [Sending emails](#sending-emails)
+* [Multi-language](#multi-language)
+  * [Enable multi-language support](#enable-multi-language-support)
+  * [Configurations](#configurations)
+  * [Translated texts inside views](#translated-texts-inside-views)
+  * [Links](#links)
+  * [Switch language](#switch-language)
+  * [Example](#example)
+* [Put on production](#put-on-production)
+* [Optimizations](#optimizations)
+* [Credits](#credits)
+* [License](#license)
 
 
 ## Getting started
