@@ -61,7 +61,7 @@ Also, these are PHP requirements from [Laravel](https://laravel.com/docs/5.2#ins
 
 ### Installation
 
-[Download Benjamin 1.0](https://github.com/netgloo/benjamin/archive/1.0.0.zip), extract it and rename the folder with your project name, e.g. `my-website`. Then from inside the project's folder type:
+[Download Benjamin 1.0](https://github.com/netgloo/benjamin/archive/1.0.0.zip), extract it and rename the folder with the name of your project, e.g. `my-website`. Then from inside the project's folder type:
 
 ``` bash
 $ composer install
@@ -128,7 +128,7 @@ You can build the website working only inside these two folders:
 
 You can place all your website pages inside the folder `/resources/views`. Each page file must be a [Blade view](https://laravel.com/docs/5.2/blade), ending with the `.blade.php` extension.
 
-A Blade view is essentially a PHP file plus some really nice directives and an easy way for defining pages' layouts; if you don't already know it, you will learn it effortless and very quickly. Take a look [here](https://laravel.com/docs/5.2/blade) for more informations.
+A Blade view is essentially a PHP file plus some really nice directives and an easy way for defining pages' layouts. If you don't already know Blade, you will learn it effortless and very quickly. Take a look [here](https://laravel.com/docs/5.2/blade) for more informations.
 
 ### Page structure
 
@@ -140,7 +140,7 @@ To be well processed by Benjamin, each view have to follow these rules:
 
 For example, this is the minimum structure for a valid Benjamin's page:
 
-``` PHP
+```Blade
 @extends($benjamin)
 
 @section('title')
@@ -158,7 +158,7 @@ Inside the section `title` you can put the page's title that will go inside the 
 
 You may want to specify a value for the body's `class` attribute. You can do it with the `bodyClass` parameter, extending `$benjamin`:
 
-``` PHP
+```Blade
 @extends($benjamin, ['bodyClass' => 'some-class'])
 ```
 
