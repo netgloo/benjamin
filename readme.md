@@ -133,24 +133,45 @@ A Blade view is essentially a PHP file plus some really nice directives and an e
 
 To be well processed by Benjamin, each view file must:
 
-1. Extend `$benjamin`.
-1. Define a section `title`: here you should set the page's title that will go inside the `<title>` tag.
+1. Extend `$benjamin` with `@extends($benjamin)`.
+1. Define a section `title`: you should set here the page's title that will go inside the `<title>` tag.
 1. Define a section `body`: here you can put the page's HTML content that will be inside the `<body>` tag.
 
-For example, this is a minimum structure for a valid Benjamin's page:
+For example, this is a valid Benjamin's view file:
 
 ```HTML
-<!-- View stored in resources/views/index.blade.php -->
+<!-- resources/views/example.blade.php -->
 
 @extends($benjamin)
 
 @section('title')
-  Here the page's title ...
+  Page title
 @endsection
 
 @section('body')
-  Here the page's HTML content ...
+  <p>
+    Here the page's HTML content ...
+  </p>
 @endsection
+```
+
+The above view will be transformed in this HTML page:
+
+```HTML
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <script defer src="/vendor/jquery/jquery-1.11.3.min.js"></script>
+  <script defer src="/vendor/benjamin/Benjamin.js"></script>
+  <title>Page title</title>
+</head>
+<body>
+  <p>
+    Here the page's HTML content ...
+  </p>
+</body>
+</html>
 ```
 
 ### Body's Class Attribute

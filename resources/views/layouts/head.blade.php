@@ -13,18 +13,18 @@
 
 <meta charset="UTF-8">
 
-<!-- JQuery (Required) -->
+{{-- JQuery (Required) --}}
 <script defer src="/vendor/jquery/jquery-1.11.3.min.js"></script>
 
-<!-- Benjamin.js (Required) -->
+{{-- Benjamin.js (Required) --}}
 <script defer src="/vendor/benjamin/Benjamin.js"></script>
 
-<!-- Velocity.js + UI Pack -->
+{{-- Velocity.js + UI Pack --}}
 <script defer src="/vendor/velocity/velocity.min.js"></script>
 <script defer src="/vendor/velocity/velocity.ui.min.js"></script>
 
-<!-- Custom stylesheet -->
+{{-- Custom stylesheet --}}
 <link href="/css/main.css" rel="stylesheet" type="text/css" />
 
-<!-- Custom javascript -->
+{{-- Custom javascript --}}
 <script defer src="/js/main.js"></script>
