@@ -38,6 +38,21 @@ Netgloo's website is built using Benjamin. Take a look: [http://netgloo.com/en](
 ## Contents
 
 * [Getting started](#getting-started)
+* [Application structure](#application-structure)
+* [Pages](#pages)
+* [Layouts](#layouts)
+* [Callbacks](#callbacks)
+* [Page transitions](#page-transitions)
+* [Scripts](#scripts)
+* [Forms](#forms)
+* [Multi-language](#multi-language)
+* [Put on production](#put-on-production)
+* [Optimizations](#optimizations)
+* [Credits](#credits)
+* [License](#license)
+
+<!--
+* [Getting started](#getting-started)
   * [Requirements](#requirements)
   * [Installation](#installation)
   * [Configurations](#configurations)
@@ -74,7 +89,7 @@ Netgloo's website is built using Benjamin. Take a look: [http://netgloo.com/en](
 * [Optimizations](#optimizations)
 * [Credits](#credits)
 * [License](#license)
-
+-->
 
 ## Getting started
 
@@ -141,7 +156,7 @@ Then visit [http://localhost:8000](http://localhost:8000) and you will see a wel
 
 Now you can start adding your own [pages](#pages) or [folders](#folders) and building your own website.
 
-**Note**: in the production server you shouldn't use `php artisan serve` but rely on Apache (or Nginx) instead. Take a look on [this](put-on-production) section for more informations.
+**Note**: in the production server you shouldn't use `php artisan serve` but rely on Apache (or Nginx) instead. Take a look on [this section](put-on-production) for more informations.
 
 ## Application structure
 
