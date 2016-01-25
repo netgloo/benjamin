@@ -6,11 +6,11 @@ You can try a Benjamin powered website here: http://benjamin.netgloo.com
 
 ### Everyone loves fast websites
 
-Benjamin is made for building fast websites. With Benjamin you can rapidly create websites that load fast and with an amazing smooth and instant navigation between pages. Website's pages will be changed client-side, without any call to the server.
+Benjamin is made for building fast websites. With Benjamin you can rapidly create websites that load fast and with an amazing smooth and instant navigation between pages. Website's pages will be changed directly client-side, without any call to the server.
 
 ### Easy development
 
-Benjamin is easy to use. Also you will find some very useful features out of the box. Like a painless [multi-language support](#multi-language) and an easy way for adding [transitions effects](#page-transitions) changing page. Moreover you don't have to worry about URLs, fallbacks for browsers who doesn't supports `pushState`, or server side rendering, all of this will be managed by Benjamin.
+Benjamin is easy to use. Also you will find some very useful features out of the box. Like a painless [multi-language support](#multi-language) and an easy way for adding [transitions effects](#page-transitions) changing page. Moreover you don't have to worry about URLs, fallbacks for browsers who doesn't supports `pushState`, or server side rendering, all this will be managed by Benjamin.
 
 ### Run everywhere
 
@@ -21,25 +21,17 @@ Almost all hosting services supports PHP nowadays, also on basic and cheaper pla
 The main aim of Benjamin is to provide a platform for small and light websites. But no ones will stopping you to add new features if you need them. If you already have some experience with [Laravel](http://laravel.com/) framework, you will find really easy add your custom functionalities, like new routes, controllers, a database connection and anything else your website needs.
 
 <!--
-### ???
-
-- URLs (pushState)
-- Server side rendering
-- Fallbacks (Progressive enanchment)
-
--->
-
-<!--
 ### Who is using Benjamin?
 
 Netgloo's website is built using Benjamin. Take a look: [http://netgloo.com/en](http://netgloo.com/en).
 -->
 
+
 ## Contents
 
 * [Getting started](#getting-started)
 * [Application structure](#application-structure)
-* [Pages](#pages)
+* [Website Pages](#website-pages)
 * [Layouts](#layouts)
 * [Multi-language](#multi-language)
 * [Scripts](#scripts)
@@ -56,7 +48,7 @@ Netgloo's website is built using Benjamin. Take a look: [http://netgloo.com/en](
 
 ## Getting started
 
-Benjamin is a pre-configured [Laravel](http://laravel.com/docs/installation) application. In order to getting started, you have only to download it, run composer and start the application with `php artisan serve`. Then you can start to build your website.
+Benjamin is a pre-configured [Laravel](http://laravel.com/docs/installation) application. In order to getting started, you have only to [download it](#installation), run composer and start the application with `php artisan serve`. Then you can start to build your website.
 
 ### Requirements
 
@@ -69,7 +61,7 @@ Also, these are PHP requirements from [Laravel](https://laravel.com/docs/5.2#ins
 
 ### Installation
 
-Download Benjamin 1.0 from [here](https://github.com/netgloo/benjamin/archive/1.0.0.zip), extract it and rename the folder with your project name, e.g. `my-website`. Then from inside the project's folder type:
+[Download Benjamin 1.0](https://github.com/netgloo/benjamin/archive/1.0.0.zip), extract it and rename the folder with your project name, e.g. `my-website`. Then from inside the project's folder type:
 
 ``` bash
 $ composer install
@@ -117,35 +109,70 @@ $ php artisan serve
 
 Then visit [http://localhost:8000](http://localhost:8000) and you will see a welcome page.
 
-Now you can start adding your own [pages](#pages) or [folders](#folders) and building your own website.
+Now you can start adding your own [web pages](#website-pages) or [folders](#folders) and building your own website.
 
-**Note**: in the production server you shouldn't use `php artisan serve` but rely on Apache (or Nginx) instead. Take a look on [this section](#production) for more informations.
+**Note**: in the production server you shouldn't use `php artisan serve` but rely on Apache (or Nginx) instead. Take a look on the [Production section](#production) for more informations.
 
 ## Application structure
 
 A Benjamin website is a Laravel application, so you can take a look [here](https://laravel.com/docs/5.2/structure#the-root-directory) for any detail about the whole application's structure.
 
 However we want to create simple and static websites, so it is not needed to go in depth about the whole application's structure.
-You can build the website working only inside these two directories:
+You can build the website working only inside these two folders:
 
+- `/public`: you should put here all public resources, as images, javascripts, stylesheets and fonts.
+- `/resources`: inside `resources` there are views (the website pages), languages files (if your website is multi-language) and raw assets as SASS or development version of javascript files.
+
+
+## Website Pages
+
+You can place all your website pages inside the folder `/resources/views`. Each page file must be a [Blade view](https://laravel.com/docs/5.2/blade), ending with the `.blade.php` extension.
+
+A Blade view is essentially a PHP file plus some really nice directives and an easy way for defining pages' layouts; if you don't already know it, you will learn it effortless and very quickly. Take a look [here](https://laravel.com/docs/5.2/blade) for more informations.
+
+### Page structure
+
+To be well processed by Benjamin, each view have to follow these rules:
+
+1. Extend `$benjamin`
+1. Define a section `title`
+1. Define a section `body`
+
+For example, this is the minimum structure for a valid Benjamin's page:
+
+``` PHP
+@extends($benjamin)
+
+@section('title')
+  Here the page's title ...
+@endsection
+
+@section('body')
+  Here the page's body content ...
+@endsection
 ```
-/public
-/resources
+
+Inside the section `title` you can put the page's title that will go inside the `<title>` tag in the final HTML page. Inside the `body` section you can put the page's content that will go inside the `<body>` tag.
+
+#### Body's class attribute
+
+You may want to specify a value for the body's `class` attribute. You can do it with the `bodyClass` parameter, extending `$benjamin`:
+
+``` PHP
+@extends($benjamin, ['bodyClass' => 'some-class'])
 ```
 
-Inside `public` you should put all public resources, as images, javascripts, stylesheets and fonts.
-Inside `resources` there are views (the website's pages), languages files (if your website is multi-language) and raw assets as SASS or development version of javascript files.
+The value `some-class` will be placed inside the `class` attribute in the `<body>` tag.
 
-
-## Pages
-
-### Index page
-
-TODO
 
 ### Add new pages
 
-TODO
+Each view you will add inside `/resources/views` will be available as a website page at the URL composed by the view's path without the `blade.php` extension. For example:
+
+- The view `page1.blade.php` will be showed at `http://<your-website.com>/page1`.
+- The view `page/inside/a-folder.blade.php` will be showed at `http://<your-website.com>/page/inside/a-folder`.
+
+
 
 Note: Do not use file names used inside the public folder.
 Examples if you have /public/images do NOT create a view images.blade.php
@@ -155,6 +182,28 @@ the public folder!
 Reserved names:
 - /index is a reserved name (but not /folder/index is not)
 - Variable $app inside views
+
+
+### Page's head
+
+
+
+### Index page
+
+TODO
+
+
+### Ignored pages
+
+Following pages will be ignored by Benjamin:
+
+- Each file or directory starting with '_'
+- Directory /errors
+- Directory /layouts
+- Directory /templates
+- Directory /vendor
+- Directory /app
+- Files not ending with '.blade.php'
 
 ### Folders
 
@@ -174,6 +223,9 @@ TODO
 
 TODO
 
+#### Ignored links
+
+TODO
 
 ## Layouts
 
@@ -182,7 +234,7 @@ TODO
 
 ## Multi-language
 
-We support multi-language websites using sub-directories URL structure.
+Benjamin supports multi-language websites using sub-directories URL structure. 
 If you enable the multi-langauge support you will have, out of the box, something like this:
 
     http://example.com       --> Website in the default language
@@ -529,7 +581,7 @@ TODO
 
 TODO
 
-#### Do not support dynamic content
+#### Does not support dynamic content
 
 TODO
 -->
