@@ -65,9 +65,9 @@ Netgloo's website is built using Benjamin. Take a look: [http://netgloo.com/en](
   * [Sending emails](#sending-emails)
 * [Multi-language](#multi-language)
   * [Enable multi-language support](#enable-multi-language-support)
-  * [Configurations](#configurations)
+  * [Configurations](#configurations-1)
   * [Translated texts inside views](#translated-texts-inside-views)
-  * [Links](#links)
+  * [Links](#links-1)
   * [Switch language](#switch-language)
   * [Example](#example)
 * [Put on production](#put-on-production)
@@ -559,7 +559,7 @@ TODO
 
 ## Credits
 
-A lot of credits go to [Lavarel](http://laravel.com) since Benjamin leans on this wonderful PHP framework.
+A lot of credits go to [Lavarel](http://laravel.com) since Benjamin leans on this great PHP framework.
 
 ## License
 
