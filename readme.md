@@ -130,17 +130,17 @@ You can place all your website pages inside the folder `/resources/views`. Each 
 
 A Blade view is essentially a PHP file plus some really nice directives and an easy way for defining pages' layouts. If you don't already know Blade, you will learn it effortless and very quickly. Take a look [here](https://laravel.com/docs/5.2/blade) for more informations.
 
-### Page structure
+### Page's structure
 
-To be well processed by Benjamin, each view have to follow these rules:
+To be well processed by Benjamin, each view file must:
 
-1. Extend `$benjamin`
-1. Define a section `title`
-1. Define a section `body`
+1. Extend `$benjamin`.
+1. Define a section `title`.
+1. Define a section `body`.
 
-For example, this is the minimum structure for a valid Benjamin's page:
+For example, this is a minimum structure for a valid Benjamin's page:
 
-```Blade
+```
 @extends($benjamin)
 
 @section('title')
@@ -148,31 +148,40 @@ For example, this is the minimum structure for a valid Benjamin's page:
 @endsection
 
 @section('body')
-  Here the page's body content ...
+  Here the page's HTML content ...
 @endsection
 ```
 
-Inside the section `title` you can put the page's title that will go inside the `<title>` tag in the final HTML page. Inside the `body` section you can put the page's content that will go inside the `<body>` tag.
+Inside the section `title` you can put the page's title that will go inside the `<title>` tag in the final HTML page. Inside the `body` section you can put the page's content that will be inside the `<body>` tag.
 
-#### Body's class attribute
+### Body's class attribute
 
 You may want to specify a value for the body's `class` attribute. You can do it with the `bodyClass` parameter, extending `$benjamin`:
 
-```Blade
+```
 @extends($benjamin, ['bodyClass' => 'some-class'])
 ```
 
 The value `some-class` will be placed inside the `class` attribute in the `<body>` tag.
 
 
+### Page's head
+
+The content of the `<head>` tag will be shared between all the pages. Only the `<title>` will change when a page is changed.
+
+You can find the head's content inside the view `layouts/head.blade.php`.
+
+You can modify the head's content as you want, but you should leave here JQuery and Benjamin.js for the proper functioning of Benjamin platform.
+
+
 ### Add new pages
 
-Each view you will add inside `/resources/views` will be available as a website page at the URL composed by the view's path without the `blade.php` extension. For example:
+Each view you will add inside `/resources/views` will be available as a website page at the URL composed by the view's path without the `.blade.php` extension. For example:
 
-- The view `page1.blade.php` will be showed at `http://<your-website.com>/page1`.
-- The view `page/inside/a-folder.blade.php` will be showed at `http://<your-website.com>/page/inside/a-folder`.
+- The view `page1.blade.php` will be showed at the URL `http://<your-website.com>/page1`.
+- The view `page/inside/a-folder.blade.php` will be showed at the URL `http://<your-website.com>/page/inside/a-folder`.
 
-
+  
 
 Note: Do not use file names used inside the public folder.
 Examples if you have /public/images do NOT create a view images.blade.php
@@ -182,10 +191,6 @@ the public folder!
 Reserved names:
 - /index is a reserved name (but not /folder/index is not)
 - Variable $app inside views
-
-
-### Page's head
-
 
 
 ### Index page
