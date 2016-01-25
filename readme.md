@@ -1,3 +1,6 @@
+* auto-gen TOC:
+{:toc}
+
 ## Benjamin
 
 Benjamin is a PHP/Javascript platform for easily building *static websites* with a really instant and smooth navigation out of the box.
@@ -49,7 +52,7 @@ $ cp .env.example .env
 $ php artisan key:generate
 ```
 
-The first command will download all dependencies needed. Then you will create the `.env` file copying it from the example provided. This file will store all your configurations. Finally, the last command will automatically generate an unique [application key](https://laravel.com/docs/5.2#installation) for you, storing it inside the `.env` file.
+The first command will download all PHP dependencies. Then you will create the `.env` file copying it from the example provided. This file will store all your configurations. Finally, the last command will automatically generate an unique [application key](https://laravel.com/docs/5.2#installation) for you, storing it inside the `.env` file.
 
 #### Troubleshooting
 
@@ -73,9 +76,11 @@ To solve this you need a GitHub account, then simply follow instructions from th
 
 ### Configurations
 
-If you want to start developing the website you can <strong>[start now](#start-the-application)</strong>. You don't have to configure anything more.
+If you want to start developing the website you can [start now](#start-the-application). You don't have to configure anything more.
 
-However, you may find helpful to take a look on how to configure a new Laravel application from [here](https://laravel.com/docs/5.2/configuration).
+<!--
+However, if you need some advanced configuration, you may find some useful information on how to configure a new Laravel application from [here](https://laravel.com/docs/5.2/configuration).
+-->
 
 ### Start the application
 
@@ -87,34 +92,33 @@ $ php artisan serve
 
 Then visit [http://localhost:8000](http://localhost:8000) and you will see a welcome page.
 
-Now you can start adding your own [pages](#pages) or [folders](#folders).
+Now you can start adding your own [pages](#pages) or [folders](#folders) and building your own website.
 
-**Note**: in the production server you shouldn't use `php artisan serve` but rely on Apache (or Nginx) instead. Take a look on the [Put on production](put-on-production) section for more.
+**Note**: in the production server you shouldn't use `php artisan serve` but rely on Apache (or Nginx) instead. Take a look on [this](put-on-production) section for more informations.
 
 ## Application structure
 
-A Benjamin website is a Laravel application, so you can take a look (here)[https://laravel.com/docs/5.2/structure#the-root-directory] for details about the whole application's structure.
+A Benjamin website is a Laravel application, so you can take a look [here](https://laravel.com/docs/5.2/structure#the-root-directory) for any detail about the whole application's structure.
 
-Anyway we want to create simple and static websites, so we don't need to go in depth about the whole application's structure. 
+However we want to create simple and static websites, so it is not needed to go in depth about the whole application's structure.
 You can build the website working only inside these two directories:
 
 ```
-/public/
-/resources/
+/public
+/resources
 ```
 
 Inside `public` you should put all public resources, as images, javascripts, stylesheets and fonts.
-Inside the `resources` there are views (the website's pages), languages files if your website is multi-language and raw assets as SASS or development version of javascript files.
-
+Inside `resources` there are views (the website's pages), languages files (if your website is multi-language) and raw assets as SASS or development version of javascript files.
 
 
 ## Pages
 
-#### Index page
+### Index page
 
 TODO
 
-#### Add new pages
+### Add new pages
 
 TODO
 
@@ -127,21 +131,21 @@ Reserved names:
 - /index is a reserved name (but not /folder/index is not)
 - Variable $app inside views
 
-#### Folders
+### Folders
 
 TODO
 
-#### Error page
+### Error page
 
 TODO
 
 Add the view errors/404.blade.php
 
-#### Ready callback
+### Ready callback
 
 TODO
 
-#### Links
+### Links
 
 TODO
 
