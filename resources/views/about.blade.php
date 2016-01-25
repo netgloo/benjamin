@@ -1,26 +1,25 @@
+@extends('layouts.main')
+
 {{-- 
   -- --------------------------------------------------------------------------
-  -- about
+  -- about (/about)
   -- --------------------------------------------------------------------------
   --
-  -- This page extends the 'main' layout.
+  -- This page use the 'main' layout (layouts/main.blade.php) extending it.
+  -- Here you can define the content and the title of the page. Inside the
+  -- main layout you can define a common structure used among all your pages.
   --
   -- --------------------------------------------------------------------------
   --}}
 
-@extends('layouts.main')
-
-
 {{-- Page Title --}}
 @section('page-title', 'About')
-
 
 {{-- Layout Content --}}
 @section('content')
   
-  <div class="content">
-    <h1>About</h1>
-    <a href="/">Go to Home</a>
-  </div>
+  <h1>This is the about page</h1>
+  <p>You can open and customize this page from <code>resources/about.blade.php</code></p>
+  <a href="/">Go to Home</a>
   
 @endsection

@@ -1,5 +1,1 @@
-<header>
-
-  {{-- ... --}}
-
-</header>
+<header> {{-- ... --}} </header>

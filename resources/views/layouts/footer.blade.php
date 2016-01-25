@@ -1,5 +1,1 @@
-<footer>
-
-  {{-- ... --}}
-
-</footer>
+<footer> {{-- ... --}} </footer>
