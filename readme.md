@@ -1,6 +1,3 @@
-* auto-gen TOC:
-{:toc}
-
 ## Benjamin
 
 Benjamin is a PHP/Javascript platform for easily building *static websites* with a really instant and smooth navigation out of the box.
@@ -28,6 +25,47 @@ The main aim of Benjamin is to provide a platform for small and light websites. 
 
 Netgloo's website is built using Benjamin. Take a look: [http://netgloo.com/en](http://netgloo.com/en).
 -->
+
+## Contents
+
+* [Getting started](getting-started)
+  * [Requirements](requirements)
+  * [Installation](installation)
+  * [Configurations](configurations)
+  * [Start the application](start-the-application)
+* [Application structure](application-structure)
+* [Pages](pages)
+  * [Index page](index-page)
+  * [Add new pages](add-new-pages)
+  * [Folders](folders)
+  * [Error pages](error-pages)
+  * [Ready callback](ready-callback)
+  * [Links](links)
+* [Layouts](layouts)
+* [Callbacks](callbacks)
+  * [Init](init)
+  * [Ready](ready)
+  * [After](after)
+  * [Out](out)
+  * [Example of a callbacks chain](example-of-a-callbacks-chain)
+* [Page transitions](page-transitions)
+  * [Effects](effects)
+* [Scripts](scripts)
+  * [Google Analytics](google-analytics)
+* [Forms](forms)
+  * [Sending emails](sending-emails)
+* [Multi-language](multi-language)
+  * [Enable multi-language support](enable-multi-language-support)
+  * [Configurations](configurations)
+  * [Translated texts inside views](translated-texts-inside-views)
+  * [Links](links)
+  * [Switch language](switch-language)
+  * [Example](example)
+* [Put on production](put-on-production)
+* [Optimizations](optimizations)
+* [Credits](credits)
+* [License](license)
+
 
 ## Getting started
 
@@ -135,7 +173,7 @@ Reserved names:
 
 TODO
 
-### Error page
+### Error pages
 
 TODO
 
@@ -275,6 +313,7 @@ TODO
 
 TODO
 
+<!--
 ### Split Benjamin.config in multiple files
 
 Perhaps you want to better organize your code and have a javascript file for each page.
@@ -325,13 +364,13 @@ A more practical solution is to use a build tool to concatenate all javascript f
 TODO: link to the build tool section.
 
 Note that you can use a build tool also if you have only a single javascript file.
-
+-->
 
 ## Forms
 
 TODO
 
-#### Sending emails
+### Sending emails
 
 TODO
 
@@ -350,7 +389,7 @@ At the web site root will be served the website in your default language.
 
 If properly used, this method allow your website to be correctly indexed by search engines on all available languages.
 
-#### Enable multi-langauge support
+### Enable multi-langauge support
 
 You can enable the Benjamin's multi-langauge support simply adding language folders inside the `resources/lang` directory. 
 Each folder should be a supported language:
@@ -372,14 +411,14 @@ Learn more about the `lang` folder and language strings in Laravel from [here](h
 
 **Note**: if the multi-language is enabled, the language sub-directory name will always take precedence over views' names. So if you have, for example, the folder `resources/lang/en` and also a view `/en.blade.php`, this last one will always be ignored (if 'en' is not the default locale) and for the url `/en`  will be served the `/index.blade.php` view with `en` as locale (and not `/en.blade.php`).
 
-#### Configurations
+### Configurations
 
 Inside the `.env` configuration file you should set these values:
 
 - `APP_LOCALE`: the default locale. This locale will be used to serve your website in the default language, without any language sub-directory.
 - `APP_FALLBACK_LOCALE`: if a string is not translated for the current locale, will be used this one as fallback (usually it is setted equals to the default locale).
 
-#### Translated texts inside views
+### Translated texts inside views
 
 You can use the `trans` helper function to translate messages inside your views. For example:
 
@@ -393,7 +432,7 @@ The right `messages.php` file will be choosen from the folder with the name of t
 
 Take a look at the [Laravel's documentation](files: https://laravel.com/docs/5.2/localization#basic-usage) for more features about how to use `trans` function and messages.
 
-#### Links
+### Links
 
 If you enable the multi-language support, you have to properly handle links in your web pages.
 
@@ -413,7 +452,7 @@ So, if the current locale is `en` (and it is not setted as default) and the curr
     <a href="/en/page2">Page 2</a>
     <a href="http://www.example.com">Example</a>
 
-#### Switch language
+### Switch language
 
 In the frontend you want to provide a way for the user to switch the language. You can do it with a link for each language you support.
 
@@ -431,7 +470,7 @@ Note that you don't have to give the current page to `langswitch`, it will be au
 
 The `data-bj-ignore` attribute will tell to Benjamin.js to ignore these links from the "on-client" navigation. When a user will click one of these links the website will be reloaded from the server in the selected language.
 
-#### Example
+### Example
 
 Look an example of a website with Benjamin configured for multilanguage on our demo here:
 
