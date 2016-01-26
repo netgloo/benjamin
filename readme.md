@@ -52,7 +52,7 @@ Netgloo's website is built using Benjamin. Take a look: [http://netgloo.com/en](
 
 Benjamin is a pre-configured [Laravel](http://laravel.com/docs/installation) application. In order to getting started, you have only to [download it](#installation), run composer and start the application with `php artisan serve`. Then you can start to develop your website.
 
-Once installed, you can start building your website simply [adding new web pages](#add-new-pages). You don't have to worry about URLs, they will be automatically deduced by the page's filename stripping out the file extension. Client side you will have, out of the box, an instant navigation for each link between your web pages, just like a Single Page Application. Benjamin will use the `pushState` api to change the URL when a page is changed, but it will automatically fallback to a *standard* navigation if the browser doesn't support `pushState`.
+Once installed, you can start building your website simply [adding new web pages](#add-new-pages). You don't have to worry about URLs, they will be automatically deduced by the page's filename stripping out the file extension. Client side you will have, out of the box, an instant navigation for each link between your web pages, just like a Single Page Application. Benjamin will use the `pushState` api to update the URL when a page is changed, but it will automatically fallback to a *standard* navigation if the browser doesn't support `pushState`.
 
 Then you can start to add [layouts](#layouts) to share a common structure between your pages, you can enable the [multi-language support](#multi-language) if your website need to provide more than one language, or you can start to play with [page transitions and callbacks](#page-transitions) if you want to control the switching process from a page to another one. Also you may want to add a [contact form](#forms) in your website that will [send an email](#sending-emails) when it is triggered. You will find all this really simple and straightforward.
 
@@ -143,13 +143,13 @@ For example:
 
 There are some exceptions to these rules, like the [index page](#index-page) served at the website's root path or some [special filenames and folder names](#ignored-pages-and-folders) that will be ignored by Benjamin.
 
-Also, you should avoid to use names already used inside the `public` folder. For example, if you have the folder `public/images` you can't create a view `images.blade.php` since for the url `http://example.com/images` will be served the `images` folder inside `public` and the view will be shadowed and never available.
+Also, you should avoid to use names already used inside the `/public` folder. For example, if you have the folder `public/images` containing your images, you can't create a view named `images.blade.php`. <!--since at the url `http://example.com/images` will be served the `images` folder inside `public` and the view will be shadowed and never available. -->
 
 To be correctly served with Benjamin, each view must follow the page structure described [below](#page-structure).
 
 #### Page Structure
 
-To be well processed by Benjamin, each page file you add inside `/resources/views` must:
+Each page file you add inside `/resources/views` must:
 
 - Extend `$benjamin`, with the directive `@extends($benjamin)`.
 - Define a section `title`: you should set here the page's title that will go inside the `<title>` tag.
@@ -173,7 +173,7 @@ For example, this is a valid Benjamin's page file:
 @endsection
 ```
 
-The above view will be transformed in this HTML page:
+The above view will generate the following HTML page:
 
 ``` html
 <!DOCTYPE html>
@@ -266,15 +266,22 @@ Note that this page is ignored by the Benjamin platform and doesn't needs to fol
 
 ### Links
 
+If the browser [support the `pushState` api](http://caniuse.com/#search=pushState), each link between two pages internal to the website will be handled by Benjamin client side. When the user will click on a link for an internal page on your website, the target page will be loaded directly client side, without any call to the server. This allow a really smooth navigation between pages, without requiring any loading time.
 
+You don't need to do anything, just normally add links in your web pages.
 
 #### Ignored links
 
-TODO
+By default following links will be ignored by Benjiamin and will have a standard behaviour:
+
+- Links poiting to another domain.
+- Links with an application protocol different from the current one.
+- Links with `data-bj-ignore` attribute.
 
 ### Ready callback
 
 TODO
+
 
 ## Layouts
 
@@ -535,7 +542,7 @@ The page is going to be changed with another page.
 - Both global and per-page versions exists. The global one will be always executed first.
 - Remember to call `next()` to execute the `after` callback for the page that will be displayed.
 
-#### Example Of A Callbacks Chain
+### Example Of A Callbacks Chain
 
 We are on page `/` and we click on a link for `/a`, following callbacks are executed:
 
@@ -547,7 +554,7 @@ We are on page `/` and we click on a link for `/a`, following callbacks are exec
 1. `ready` for page `/a`
 
 
-#### Effects
+### Effects
 
 TODO
 
@@ -613,11 +620,11 @@ TODO
 
 Coming Soon.
 
-(This section is under construction)
+*This section is under construction...*
 
 <!--
 
-How it works: details => Link to Netgloo's Blog
+How it works => Link to Netgloo's Blog
 
 -->
 
