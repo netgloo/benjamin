@@ -10,7 +10,10 @@ Benjamin is made for building fast websites. With Benjamin you can rapidly creat
 
 ### Easy development
 
-Benjamin is easy to use. Also you will find some very useful features out of the box. Like a painless [multi-language support](#multi-language) and an easy way for adding [transitions effects](#page-transitions) changing page. Moreover you don't have to worry about URLs, fallbacks for browsers who doesn't supports `pushState`, or server side rendering, all this will be managed by Benjamin.
+Benjamin is made to be easy to use. Also you will find some very useful features out of the box. Like a painless [multi-language support](#multi-language) and an easy way for adding [transitions effects](#page-transitions) changing page. 
+<!--
+Moreover you don't have to worry about URLs, fallbacks for browsers who doesn't supports `pushState`, or server side rendering, all this will be managed by Benjamin.
+-->
 
 ### Run everywhere
 
@@ -47,11 +50,11 @@ Netgloo's website is built using Benjamin. Take a look: [http://netgloo.com/en](
 
 ## Getting Started
 
-Benjamin is a pre-configured [Laravel](http://laravel.com/docs/installation) application. In order to getting started, you have only to [download it](#installation), run composer and start the application with `php artisan serve`. Then you can start to build your website.
+Benjamin is a pre-configured [Laravel](http://laravel.com/docs/installation) application. In order to getting started, you have only to [download it](#installation), run composer and start the application with `php artisan serve`. Then you can start to develop your website.
 
-Once installed, you can start building your website simply [adding new web pages](#add-new-pages). You don't have to worry about URLs, they will be automatically composed by the page's filename stripping out the file extension. Client side you will have, out of the box, an instant navigation for each link between website's pages, just like a Single Page Application. Benjamin will use the `pushState` api to change the URL when a page is changed, but will automatically fallback to a *standard* navigation if the browser doesn't support it.
+Once installed, you can start building your website simply [adding new web pages](#add-new-pages). You don't have to worry about URLs, they will be automatically deduced by the page's filename stripping out the file extension. Client side you will have, out of the box, an instant navigation for each link between your web pages, just like a Single Page Application. Benjamin will use the `pushState` api to change the URL when a page is changed, but it will automatically fallback to a *standard* navigation if the browser doesn't support `pushState`.
 
-Then you can start to add [layouts](#layouts) to share a common structure between your pages, enable the [multi-language support](#multi-language) if your website must be in more than one language, or you can start to play with [callbacks](#callbacks) and [page transitions](#page-transitions) if you want to control the switching process from a page to another one. Also you may want to add a [contact form](#forms) to your website and [sending an email](#sending-emails). You will find all this really simple and straightforward.
+Then you can start to add [layouts](#layouts) to share a common structure between your pages, you can enable the [multi-language support](#multi-language) if your website need to provide more than one language, or you can start to play with [callbacks](#callbacks) and [page transitions](#page-transitions) if you want to control the switching process from a page to another one. Also you may want to add a [contact form](#forms) in your website that will [send an email](#sending-emails) when it is triggered. You will find all this really simple and straightforward.
 
 ### Requirements
 
@@ -108,7 +111,7 @@ $ php artisan serve
 
 Then visit [http://localhost:8000](http://localhost:8000) and you will see a welcome page.
 
-Now you can start adding your own [web pages](#website-pages) and [folders](#folders), and building your website.
+Now you can start adding your own [web pages and folders](#website-pages), and building your website.
 
 **Note**: in the production server you shouldn't use `php artisan serve` but rely on Apache (or Nginx) instead. Take a look on the [Production section](#production) for more informations.
 
@@ -129,7 +132,22 @@ Website pages are inside the folder `/resources/views`. Each page file must be a
 
 A Blade view is essentially a PHP file plus some really nice directives and an easy way for defining layouts. If you don't already know Blade, you will learn it effortless and very quickly. Take a look [here](https://laravel.com/docs/5.2/blade) for all the informations you need to know.
 
-### Page Structure
+### Add New Pages
+
+Each view you will add inside `/resources/views` will be available as a page for your website. The URL path is composed by the view's path without the `.blade.php` extension. 
+
+For example:
+
+- The view `/resources/views/page.blade.php` will be showed at `http://example.com/page`.
+- The view `/resources/views/page/inside/folder.blade.php` will be showed at `http://example.com/page/inside/folder`.
+
+There are some exceptions to these rules, like the [index page](#index-page) served at the website's root path or some [special filenames and folder names](#ignored-pages-and-folders) that will be ignored by Benjamin.
+
+Also, you should avoid to use names already used inside the `public` folder. For example, if you have the folder `public/images` you can't create a view `images.blade.php` since for the url `http://example.com/images` will be served the `images` folder inside `public` and the view will be shadowed and never available.
+
+To be correctly served with Benjamin, each view must follow the page structure described [below](#page-structure).
+
+#### Page Structure
 
 To be well processed by Benjamin, each page file you add inside `/resources/views` must:
 
@@ -174,7 +192,9 @@ The above view will be transformed in this HTML page:
 </html>
 ```
 
-When you download Benjamin the first time, you will find under `resources/views` two example pages: `index.blade.php` and `page.blade.php`. The first one is the [website's index page](#index-page), served at the website's root (at `http://example.com/`), and it is defined as a *stand-alone* view extending directly `$benjamin`. The second one instead is a normal page, served at the path defined by its filename (at `http://example.com/page`); this view use a layout structure, extending a layout view defined inside the `layouts` folder. You can see more about layouts [here](#layouts).
+<!--
+When you download Benjamin the first time, you will find under `resources/views` two example pages: `index.blade.php` and `example.blade.php`. The first one is the [website's index page](#index-page), served at the website's root (e.g. `http://example.com/`), and it is defined as a *stand-alone* view extending directly `$benjamin`. The second one instead is a normal page, served at the path defined by its filename (e.g. `http://example.com/page`); this view use a layout structure, extending a layout view defined inside the `layouts` folder. You can see more about layouts [here](#layouts).
+-->
 
 ### Body Class Attribute
 
@@ -193,21 +213,6 @@ The content of the `<head>` tag will be shared between all the pages. Only the `
 You can find the head's content inside the view `layouts/head.blade.php`.
 
 You can modify the head's content as you want, but you should leave jQuery and Benjamin.js inside it for the proper functioning of the Benjamin platform.
-
-### Add New Pages
-
-Each view you will add inside `/resources/views` will be available as a page for your website. The URL path is composed by the view's path without the `.blade.php` extension. 
-
-For example:
-
-- The view `/resources/views/page.blade.php` will be showed at `http://example.com/page`.
-- The view `/resources/views/page/inside/folder.blade.php` will be showed at `http://example.com/page/inside/folder`.
-
-There are some exceptions to these rules, like the [index page](#index-page) served at the website's root path or some [special filenames and folder names](#ignored-pages-and-folders) that will be ignored by Benjamin.
-
-Also, you should avoid to use names already used inside the `public` folder. For example, if you have the folder `public/images` you can't create a view `images.blade.php` since for the url `http://example.com/images` will be served first the public resource and the view will be shadowed and never available.
-
-To be correctly served with Benjamin, each view must follow the page structure described [here](#page-structure).
 
 ### Index Page
 
@@ -251,13 +256,13 @@ Following pages and folders, inside `resources/views`, will be ignored by Benjam
 - Directory `/layouts`: use this folder to store all your layouts and layouts' parts (like the footer or the header). This is also the default folder for the [head view](#page-head).
 - Directory `/templates`: you can optionally use this folder if you have commons pieces used around the website and you want to keep them separate from the layout folder.
 - Directory `/vendor`: this is a Laravel's special folder and its content is ignored.
-- Directory `/app`: you can use this folder in the case you want to add some functionalities to Benjamin and you need custom views, not processed by Benjamin.
+- Directory `/app`: you can use this folder in the case you want to add some functionalities to Benjamin and you need custom views, not processed by Benjamin itself.
 
 ### Error Pages
 
-TODO
+You can create a custom page for the 404 HTTP error (page not found) simply creating the `/resources/views/errors/404.blade.php` view. 
 
-Add the view errors/404.blade.php
+Note that this page is ignored by the Benjamin platform and doesn't needs to follow the (page structure)[#page-structure] of other web pages (then doesn't needs to extends `$benjamin`) but needs to define its own `<html>` and `<head>` tags.
 
 ### Ready callback
 
@@ -362,8 +367,8 @@ Use the `langswitch` helper function to create links for switching languages on 
 
 Supposing the current page is `/about` and the default language is `es`, the code above will produce these links:
 
-    <a href="/en/about" data-bj-ignore="true">English</a>
-    <a href="/about" data-bj-ignore="true">Spanish</a>
+    <a href="/en/about" data-bj-ignore >English</a>
+    <a href="/about" data-bj-ignore >Spanish</a>
 
 Note that you don't have to give the current page to `langswitch`, it will be automatically deduced on each page.
 
@@ -605,7 +610,9 @@ TODO
 
 ## How It Works
 
-TODO
+Coming Soon.
+
+(This section is under construction)
 
 <!--
 
