@@ -39,12 +39,13 @@ Netgloo's website is built using Benjamin. Take a look: [http://netgloo.com/en](
 * [Scripts](#scripts)
 * [Page Transitions](#page-transitions)
 * [Forms](#forms)
-<!-- * [Workflow](#workflow) -->
 * [Production](#production)
-<!-- * [Optimizations](#optimizations) -->
 * [How It Works](#how-it-works)
 * [Credits](#credits)
 * [License](#license)
+
+<!-- * [Workflow](#workflow) -->
+<!-- * [Optimizations](#optimizations) -->
 
 
 ## Getting Started
