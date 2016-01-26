@@ -25,7 +25,7 @@ Benjamin.on({
   'after': function(next) {
     console.log('after');
 
-    $(".content").velocity("transition.slideRightIn", {
+    $(".content").velocity("transition.slideDownIn", {
       complete: function(elements) { 
         // Remember to call next() when the transition is finish.
         return next();

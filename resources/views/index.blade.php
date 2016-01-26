@@ -5,9 +5,11 @@
   -- index (/)
   -- --------------------------------------------------------------------------
   --
-  -- This page directly extends $benjamin.
+  -- This is the index page.
+  -- In this example is defined as a "stand-alone" page and directly extends 
+  -- $benjamin.
   -- Extending $benjamin you can give it the parameter 'bodyClass' that will be 
-  -- used as 'class' attribute inside the 'body' element for this page.
+  -- used as 'class' attribute in the '<body>' tag for this page.
   -- Sections 'title' and 'body' are always required and you should use them 
   -- to define respectively the page's title and the page's body.
   --
@@ -22,10 +24,12 @@
 {{-- Body --}}
 @section('body')
 
-  <div class="content">
-    <h1>Welcome</h1>
-    <p>You can customize this page from <code>resources/index.blade.php</code></p>
-    <a href="/page">Go to <code>/page</code></a>
+  <div class="container">
+    <div class="content">
+      <div class="title">Welcome.</div>
+      <p>You can customize this page from /resources/views/index.blade.php</p>
+      <p><a href="/example">Go to /example</a></p>
+    </div>
   </div>
 
 @endsection

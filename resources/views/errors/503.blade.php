@@ -3,7 +3,7 @@
   <head>
     <title>Be right back.</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
 
     <style>
       html, body {
@@ -14,10 +14,15 @@
         margin: 0;
         padding: 0;
         width: 100%;
-        color: #B0BEC5;
+        color: #9EBA9E;
+        background-color: #F0F0F0;
         display: table;
         font-weight: 100;
-        font-family: 'Lato';
+        font-family: 'Open Sans';
+      }
+
+      p {
+        font-size: 18px;
       }
 
       .container {
@@ -32,8 +37,8 @@
       }
 
       .title {
-        font-size: 72px;
-        margin-bottom: 40px;
+        font-size: 60px;
+        margin-bottom: 30px;
       }
     </style>
   </head>
