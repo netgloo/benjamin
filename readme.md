@@ -116,7 +116,7 @@ Now you can start adding your own [web pages](#website-pages) and [folders](#fol
 
 A Benjamin website is a Laravel application, so you can take a look [here](https://laravel.com/docs/5.2/structure#the-root-directory) for any detail about the whole application's structure.
 
-However we want to create simple and static websites, so it is not needed to go in depth about the whole application's structure.
+However we want to create simple and static websites, so it is not needed to know in depth the whole structure.
 You can build the website working only inside these two folders:
 
 - `/public`: you should put here all public resources, as images, javascripts, stylesheets and fonts.
@@ -125,21 +125,21 @@ You can build the website working only inside these two folders:
 
 ## Website Pages
 
-You can place all your website pages inside the folder `/resources/views`. Each page file must be a [Blade view](https://laravel.com/docs/5.2/blade), ending with the `.blade.php` extension.
+Website pages are inside the folder `/resources/views`. Each page file must be a [Blade view](https://laravel.com/docs/5.2/blade), ending with the extension `.blade.php`.
 
-A Blade view is essentially a PHP file plus some really nice directives and an easy way for defining pages' layouts. If you don't already know Blade, you will learn it effortless and very quickly. Take a look [here](https://laravel.com/docs/5.2/blade) for more informations.
+A Blade view is essentially a PHP file plus some really nice directives and an easy way for defining pages' layouts. If you don't already know Blade, you will learn it effortless and very quickly. Take a look [here](https://laravel.com/docs/5.2/blade) for all the informations you need to know.
 
 ### Page's Structure
 
-To be well processed by Benjamin, each view file must:
+To be well processed by Benjamin, each page file you will add inside `/resources/views` must:
 
-1. Extend `$benjamin` with `@extends($benjamin)`.
-1. Define a section `title`: you should set here the page's title that will go inside the `<title>` tag.
-1. Define a section `body`: here you can put the page's HTML content that will be inside the `<body>` tag.
+- Extend `$benjamin`, with the directive `@extends($benjamin)`.
+- Define a section `title`: you should set here the page's title that will go inside the `<title>` tag.
+- Define a section `body`: here you can put the page's HTML content that will be inside the `<body>` tag.
 
-For example, this is a valid Benjamin's view file:
+For example, this is a valid Benjamin's page file:
 
-```HTML
+``` html
 <!-- resources/views/example.blade.php -->
 
 @extends($benjamin)
@@ -155,9 +155,9 @@ For example, this is a valid Benjamin's view file:
 @endsection
 ```
 
-The above view will be transformed in this HTML page:
+The above view will become this HTML page:
 
-```HTML
+``` html
 <!DOCTYPE html>
 <html>
 <head>
@@ -174,6 +174,8 @@ The above view will be transformed in this HTML page:
 </html>
 ```
 
+When you download Benjamin the first time, you will find under `resources/views` two example pages: `index.blade.php` and `page.blade.php`. The first one is the [website's index page](#index-page), served at the website's root (e.g. at `http://example.com/`), and it is defined as a *stand-alone* view extending directly `$benjamin`. The second one instead is a normal page, served at the path defined by its filename (e.g. at `http://example.com/page`); this view use a layout structure, extending a layout view defined inside the `layuouts` folder. You can 
+
 ### Body's Class Attribute
 
 You may want to specify a value for the body's `class` attribute. You can do it with the `bodyClass` parameter, extending `$benjamin`:
@@ -184,34 +186,26 @@ You may want to specify a value for the body's `class` attribute. You can do it 
 
 The value `some-class` will be placed inside the `class` attribute in the `<body>` tag.
 
-
 ### Page's Head
 
 The content of the `<head>` tag will be shared between all the pages. Only the `<title>` will change when a page is changed.
 
 You can find the head's content inside the view `layouts/head.blade.php`.
 
-You can modify the head's content as you want, but you should leave here JQuery and Benjamin.js for the proper functioning of Benjamin platform.
-
+You can modify the head's content as you want, but you should leave inside it JQuery and Benjamin.js for the proper functioning of the Benjamin platform.
 
 ### Add New Pages
 
-Each view you will add inside `/resources/views` will be available as a website page at the URL composed by the view's path without the `.blade.php` extension. For example:
+Each view you will add inside `/resources/views` will be available as a page for your website, at the URL path composed by the view's path without the `.blade.php` extension. 
 
-- The view `page1.blade.php` will be showed at the URL `http://<your-website.com>/page1`.
-- The view `page/inside/a-folder.blade.php` will be showed at the URL `http://<your-website.com>/page/inside/a-folder`.
+For example:
 
-  
+- `page.blade.php` will be showed at `http://example.com/page`.
+- `page/inside/folder.blade.php` will be showed at `http://example.com/page/inside/folder`.
 
-Note: Do not use file names used inside the public folder.
-Examples if you have /public/images do NOT create a view images.blade.php
-since it will respond for the user /images that is already covered by
-the public folder!
+There are some exceptions to these rules, like the [index page](index-page) or some special filenames and folder names that [will be ignored](ignored-pages-and-folders) by Benjamin.
 
-Reserved names:
-- /index is a reserved name (but not /folder/index is not)
-- Variable $app inside views
-
+Also, you should avoid to use names already used inside the `public` folder. For example, if you have the folder `public/images` you can't create a view `images.blade.php` since for the url `http://example.com/images` will be served first the public resource and the view will be shadowed and never available.
 
 ### Index Page
 
@@ -293,7 +287,7 @@ Learn more about the `lang` folder and language strings in Laravel from [here](h
 
 ### Configurations
 
-Inside the `.env` configuration file you should set these values:
+Inside the `.env` configuration file you should have set these values:
 
 - `APP_LOCALE`: the default locale. This locale will be used to serve your website in the default language, without any language sub-directory. There must be a language folder inside `resources/lang` having this value.
 - `APP_FALLBACK_LOCALE`: if a string is not translated for the current locale, will be used this one as fallback (usually it is set equals to the default locale).
@@ -314,7 +308,7 @@ Take a look at the [Laravel's documentation](https://laravel.com/docs/5.2/locali
 
 ### Links
 
-If you enable the multi-language support, you have to properly handle links in your web pages.
+If you enable the multi-language support, you have to properly handle links in your web pages to be coherent with the current language.
 
 You can use the `trlink` helper function for links, inside Blade's views, in this way:
 
