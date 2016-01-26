@@ -2,7 +2,7 @@
 
 {{-- 
   -- --------------------------------------------------------------------------
-  -- about (/about)
+  -- page (/page)
   -- --------------------------------------------------------------------------
   --
   -- This page use the 'main' layout (layouts/main.blade.php) extending it.
@@ -13,7 +13,9 @@
   --}}
 
 {{-- Page Title --}}
-@section('page-title', 'About')
+@section('page-title')
+  Page
+@endsection
 
 {{-- Layout Content --}}
 @section('content')
