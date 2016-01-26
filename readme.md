@@ -37,12 +37,11 @@ Netgloo's website is built using Benjamin. Take a look: [http://netgloo.com/en](
 * [Layouts](#layouts)
 * [Multi-Language](#multi-language)
 * [Scripts](#scripts)
-* [Callbacks](#callbacks)
 * [Page Transitions](#page-transitions)
 * [Forms](#forms)
-* [Workflow](#workflow)
+<!-- * [Workflow](#workflow) -->
 * [Production](#production)
-* [Optimizations](#optimizations)
+<!-- * [Optimizations](#optimizations) -->
 * [How It Works](#how-it-works)
 * [Credits](#credits)
 * [License](#license)
@@ -54,7 +53,7 @@ Benjamin is a pre-configured [Laravel](http://laravel.com/docs/installation) app
 
 Once installed, you can start building your website simply [adding new web pages](#add-new-pages). You don't have to worry about URLs, they will be automatically deduced by the page's filename stripping out the file extension. Client side you will have, out of the box, an instant navigation for each link between your web pages, just like a Single Page Application. Benjamin will use the `pushState` api to change the URL when a page is changed, but it will automatically fallback to a *standard* navigation if the browser doesn't support `pushState`.
 
-Then you can start to add [layouts](#layouts) to share a common structure between your pages, you can enable the [multi-language support](#multi-language) if your website need to provide more than one language, or you can start to play with [callbacks](#callbacks) and [page transitions](#page-transitions) if you want to control the switching process from a page to another one. Also you may want to add a [contact form](#forms) in your website that will [send an email](#sending-emails) when it is triggered. You will find all this really simple and straightforward.
+Then you can start to add [layouts](#layouts) to share a common structure between your pages, you can enable the [multi-language support](#multi-language) if your website need to provide more than one language, or you can start to play with [page transitions and callbacks](#page-transitions) if you want to control the switching process from a page to another one. Also you may want to add a [contact form](#forms) in your website that will [send an email](#sending-emails) when it is triggered. You will find all this really simple and straightforward.
 
 ### Requirements
 
@@ -260,19 +259,19 @@ Following pages and folders, inside `resources/views`, will be ignored by Benjam
 
 ### Error Pages
 
-You can create a custom page for the 404 HTTP error (page not found) simply creating the `/resources/views/errors/404.blade.php` view. 
+You can create a custom page for the 404 HTTP error (page not found) simply creating the view file `/resources/views/errors/404.blade.php`.
 
-Note that this page is ignored by the Benjamin platform and doesn't needs to follow the (page structure)[#page-structure] of other web pages (then doesn't needs to extends `$benjamin`) but needs to define its own `<html>` and `<head>` tags.
-
-### Ready callback
-
-TODO
+Note that this page is ignored by the Benjamin platform and doesn't needs to follow the [page structure](#page-structure) of other web pages (then doesn't needs to extends `$benjamin`) but needs to define its own `<html>` and `<head>` tags.
 
 ### Links
 
-TODO
+
 
 #### Ignored links
+
+TODO
+
+### Ready callback
 
 TODO
 
@@ -443,7 +442,11 @@ Note that you can use a build tool also if you have only a single javascript fil
 -->
 
 
-## Callbacks
+## Page Transitions
+
+TODO
+
+### Callbacks
 
 ``` javascript
 // Global callbacks (do NOT put them inside $(document).ready)
@@ -475,7 +478,7 @@ Benjamin.on('/about', {
 
 ```
 
-### Init
+#### Init
 
 Initialize your things.
 
@@ -483,7 +486,7 @@ Initialize your things.
 - Executed before any `ready` callback.
 - Only global version exists.
 
-### Ready
+#### Ready
 
 The page is ready.
 
@@ -508,7 +511,7 @@ Example: we are on page `/`, click on a link for page `/a`, the `before` callbac
 - You need to call `next()` to display the page `/a`.
 -->
 
-### After
+#### After
 
 After a page is changed.
 
@@ -522,7 +525,7 @@ After a page is changed.
 - **Hint**: this is a good place for page transition effect since the page content is inside the `body` and ...
 -->
 
-### Out
+#### Out
 
 The page is going to be changed with another page.
 
@@ -531,7 +534,7 @@ The page is going to be changed with another page.
 - Both global and per-page versions exists. The global one will be always executed first.
 - Remember to call `next()` to execute the `after` callback for the page that will be displayed.
 
-### Example Of A Callbacks Chain
+#### Example Of A Callbacks Chain
 
 We are on page `/` and we click on a link for `/a`, following callbacks are executed:
 
@@ -543,11 +546,7 @@ We are on page `/` and we click on a link for `/a`, following callbacks are exec
 1. `ready` for page `/a`
 
 
-## Page Transitions
-
-TODO
-
-### Effects
+#### Effects
 
 TODO
 
@@ -564,7 +563,7 @@ TODO
 
 TODO
 
-
+<!--
 ## Workflow
 
 TODO
@@ -580,6 +579,7 @@ TODO
 ### Working With Javascript
 
 TODO
+-->
 
 
 ## Production
@@ -587,11 +587,11 @@ TODO
 TODO
 
 
+<!--
 ## Optimizations
 
 TODO
 
-<!--
 
 #### Cache pages
 
