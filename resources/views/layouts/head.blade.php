@@ -13,7 +13,7 @@
 
 <meta charset="UTF-8">
 
-{{-- JQuery (Required) --}}
+{{-- jQuery (Required) --}}
 <script defer src="/vendor/jquery/jquery-1.11.3.min.js"></script>
 
 {{-- Benjamin.js (Required) --}}

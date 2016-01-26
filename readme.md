@@ -72,13 +72,9 @@ The first command will download all PHP dependencies. Then you will create the `
 
 #### Troubleshooting
 
-Due to GitHub's API rate limits, can happen that you will get an error like this when you run `composer install`:
+If it is the first time you will use Composer, can happen that you will get an error like this when you run `composer install`:
 
 ``` bash
-Loading composer repositories with package information
-Installing dependencies (including require-dev) from lock file
-- Installing username/repo (1.2.3)
-Downloading: Connecting...
 Could not fetch https://api.github.com/repos/username/repo/zipball/863df9687835c62aa423a22412d26fa2ebde3fd3, please create a GitHub OAuth token to go over the API rate limit
 Head to https://github.com/settings/tokens/new?scopes=repo&description=Composer+on+my+PC
 to retrieve a token. It will be stored in "/home/user/.composer/auth.json" for future use by Composer.
@@ -87,7 +83,7 @@ Token (hidden):
 
 To solve this you need a GitHub account, then simply follow instructions from the error message, that are:
 
-- Go to https://github.com/settings/tokens/new?scopes=repo&description=Composer+on+my+PC to retrive a token
+- Go to https://github.com/settings/tokens/new?scopes=repo&description=Composer+on+my+PC to retrive a token for using Composer
 - Give the token to composer pasting it when prompted, after `Token (hidden):`
 
 <!--
@@ -127,11 +123,11 @@ You can build the website working only inside these two folders:
 
 Website pages are inside the folder `/resources/views`. Each page file must be a [Blade view](https://laravel.com/docs/5.2/blade), ending with the extension `.blade.php`.
 
-A Blade view is essentially a PHP file plus some really nice directives and an easy way for defining pages' layouts. If you don't already know Blade, you will learn it effortless and very quickly. Take a look [here](https://laravel.com/docs/5.2/blade) for all the informations you need to know.
+A Blade view is essentially a PHP file plus some really nice directives and an easy way for defining layouts. If you don't already know Blade, you will learn it effortless and very quickly. Take a look [here](https://laravel.com/docs/5.2/blade) for all the informations you need to know.
 
-### Page's Structure
+### Page Structure
 
-To be well processed by Benjamin, each page file you will add inside `/resources/views` must:
+To be well processed by Benjamin, each page file you add inside `/resources/views` must:
 
 - Extend `$benjamin`, with the directive `@extends($benjamin)`.
 - Define a section `title`: you should set here the page's title that will go inside the `<title>` tag.
@@ -155,7 +151,7 @@ For example, this is a valid Benjamin's page file:
 @endsection
 ```
 
-The above view will become this HTML page:
+The above view will be transformed in this HTML page:
 
 ``` html
 <!DOCTYPE html>
@@ -174,11 +170,11 @@ The above view will become this HTML page:
 </html>
 ```
 
-When you download Benjamin the first time, you will find under `resources/views` two example pages: `index.blade.php` and `page.blade.php`. The first one is the [website's index page](#index-page), served at the website's root (e.g. at `http://example.com/`), and it is defined as a *stand-alone* view extending directly `$benjamin`. The second one instead is a normal page, served at the path defined by its filename (e.g. at `http://example.com/page`); this view use a layout structure, extending a layout view defined inside the `layuouts` folder. You can 
+When you download Benjamin the first time, you will find under `resources/views` two example pages: `index.blade.php` and `page.blade.php`. The first one is the [website's index page](#index-page), served at the website's root (at `http://example.com/`), and it is defined as a *stand-alone* view extending directly `$benjamin`. The second one instead is a normal page, served at the path defined by its filename (at `http://example.com/page`); this view use a layout structure, extending a layout view defined inside the `layouts` folder. You can see more about layouts [here](#layouts).
 
-### Body's Class Attribute
+### Body Class Attribute
 
-You may want to specify a value for the body's `class` attribute. You can do it with the `bodyClass` parameter, extending `$benjamin`:
+You may want to specify a value for the body's `class` attribute. You can do it using the `bodyClass` parameter, extending `$benjamin`:
 
 ```
 @extends($benjamin, ['bodyClass' => 'some-class'])
@@ -186,47 +182,73 @@ You may want to specify a value for the body's `class` attribute. You can do it 
 
 The value `some-class` will be placed inside the `class` attribute in the `<body>` tag.
 
-### Page's Head
+### Page Head
 
 The content of the `<head>` tag will be shared between all the pages. Only the `<title>` will change when a page is changed.
 
 You can find the head's content inside the view `layouts/head.blade.php`.
 
-You can modify the head's content as you want, but you should leave inside it JQuery and Benjamin.js for the proper functioning of the Benjamin platform.
+You can modify the head's content as you want, but you should leave inside it jQuery and Benjamin.js for the proper functioning of the Benjamin platform.
 
 ### Add New Pages
 
-Each view you will add inside `/resources/views` will be available as a page for your website, at the URL path composed by the view's path without the `.blade.php` extension. 
+Each view you will add inside `/resources/views` will be available as a page for your website. The URL path is composed by the view's path without the `.blade.php` extension. 
 
 For example:
 
-- `page.blade.php` will be showed at `http://example.com/page`.
-- `page/inside/folder.blade.php` will be showed at `http://example.com/page/inside/folder`.
+- The view `/resources/views/page.blade.php` will be showed at `http://example.com/page`.
+- The view `/resources/views/page/inside/folder.blade.php` will be showed at `http://example.com/page/inside/folder`.
 
-There are some exceptions to these rules, like the [index page](index-page) or some special filenames and folder names that [will be ignored](ignored-pages-and-folders) by Benjamin.
+There are some exceptions to these rules, like the [index page](#index-page) served at the website's root path or some [special filenames and folder names](#ignored-pages-and-folders) that will be ignored by Benjamin.
 
 Also, you should avoid to use names already used inside the `public` folder. For example, if you have the folder `public/images` you can't create a view `images.blade.php` since for the url `http://example.com/images` will be served first the public resource and the view will be shadowed and never available.
 
+To be correctly served, each view must follow the page structure described [here](#page-structure).
+
 ### Index Page
 
-TODO
+For the website's root will be served the content of the view named `index.blade.php` inside `/resources/views`.
 
+For example:
 
-### Folders
+``` html
+<!-- resources/views/index.blade.php -->
+@extends($benjamin)
 
-TODO
+@section('title', 'Welcome')
+
+@section('body')
+  <h1>Welcome</h1>
+@endsection
+```
+
+will show this HTML page at `http://example.com/`:
+
+``` html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <!-- scripts ... -->
+  <title>Welcome</title>
+</head>
+<body>
+  <h1>Welcome</h1>
+</body>
+</html>
+```
 
 ### Ignored Pages And Folders
 
-Following pages will be ignored by Benjamin:
+Following pages and folders, inside `resources/views`, will be ignored by Benjamin:
 
-- Each file or directory starting with '_'
-- Directory /errors
-- Directory /layouts
-- Directory /templates
-- Directory /vendor
-- Directory /app
 - Files not ending with '.blade.php'
+- Each file or directory starting with '_': you can use the underscore prefix to temporarily disable a page or a whole folder.
+- Directory `/errors`: inside this directory you should put [error pages](#error-pages).
+- Directory `/layouts`: use this folder to store all your layouts and layouts' parts (like the footer or the header). This is also the default folder for the [head view](#page-head).
+- Directory `/templates`: you can optionally use this folder if you have commons pieces used around the website and you want to keep them separate from the layout folder.
+- Directory `/vendor`: this is a Laravel's special folder.
+- Directory `/app`: you can use this folder in the case you want to add functionality to Benjamin and you need custom views, not processed by Benjamin.
 
 ### Error Pages
 
