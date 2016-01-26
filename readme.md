@@ -49,6 +49,10 @@ Netgloo's website is built using Benjamin. Take a look: [http://netgloo.com/en](
 
 Benjamin is a pre-configured [Laravel](http://laravel.com/docs/installation) application. In order to getting started, you have only to [download it](#installation), run composer and start the application with `php artisan serve`. Then you can start to build your website.
 
+Once installed, you can start building your website simply [adding new web pages](#add-new-pages). You don't have to worry about URLs, they will be automatically composed by the page's filename stripping out the file extension. Client side you will have, out of the box, an instant navigation for each link between website's pages, just like a Single Page Application. Benjamin will use the `pushState` api to change the URL when a page is changed, but will automatically fallback to a *standard* navigation if the browser doesn't support it.
+
+Then you can start to add [layouts](#layouts) to share a common structure between your pages, enable the [multi-language support](#multi-language) if your website must be in more than one language, or you can start to play with [callbacks](#callbacks) and [page transitions](#page-transitions) if you want to control the switching process from a page to another one. Also you may want to add a [contact form](#forms) to your website and [sending an email](#sending-emails). You will find all this really simple and straightforward.
+
 ### Requirements
 
 You need to have [composer](http://getcomposer.org/) installed on your PC in order to be able to download all Benjamin's dependencies. This is not really required on the production server.
@@ -72,7 +76,7 @@ The first command will download all PHP dependencies. Then you will create the `
 
 #### Troubleshooting
 
-If it is the first time you will use Composer, can happen that you will get an error like this when you run `composer install`:
+If it is the first time you run Composer, can happen that you get an error like the one below when you run `composer install`:
 
 ``` bash
 Could not fetch https://api.github.com/repos/username/repo/zipball/863df9687835c62aa423a22412d26fa2ebde3fd3, please create a GitHub OAuth token to go over the API rate limit
@@ -83,8 +87,8 @@ Token (hidden):
 
 To solve this you need a GitHub account, then simply follow instructions from the error message, that are:
 
-- Go to https://github.com/settings/tokens/new?scopes=repo&description=Composer+on+my+PC to retrive a token for using Composer
-- Give the token to composer pasting it when prompted, after `Token (hidden):`
+- Go to https://github.com/settings/tokens/new?scopes=repo&description=Composer+on+my+PC to retrive a token to using with Composer.
+- Give the token to composer pasting it when prompted, after `Token (hidden):`.
 
 <!--
 ### Configurations
@@ -188,7 +192,7 @@ The content of the `<head>` tag will be shared between all the pages. Only the `
 
 You can find the head's content inside the view `layouts/head.blade.php`.
 
-You can modify the head's content as you want, but you should leave inside it jQuery and Benjamin.js for the proper functioning of the Benjamin platform.
+You can modify the head's content as you want, but you should leave jQuery and Benjamin.js inside it for the proper functioning of the Benjamin platform.
 
 ### Add New Pages
 
@@ -203,16 +207,15 @@ There are some exceptions to these rules, like the [index page](#index-page) ser
 
 Also, you should avoid to use names already used inside the `public` folder. For example, if you have the folder `public/images` you can't create a view `images.blade.php` since for the url `http://example.com/images` will be served first the public resource and the view will be shadowed and never available.
 
-To be correctly served, each view must follow the page structure described [here](#page-structure).
+To be correctly served with Benjamin, each view must follow the page structure described [here](#page-structure).
 
 ### Index Page
 
 For the website's root will be served the content of the view named `index.blade.php` inside `/resources/views`.
 
-For example:
+For example, if the below content is inside `resources/views/index.blade.php`:
 
 ``` html
-<!-- resources/views/index.blade.php -->
 @extends($benjamin)
 
 @section('title', 'Welcome')
@@ -222,7 +225,7 @@ For example:
 @endsection
 ```
 
-will show this HTML page at `http://example.com/`:
+will be showed this HTML page at `http://example.com/`:
 
 ``` html
 <!DOCTYPE html>
@@ -242,13 +245,13 @@ will show this HTML page at `http://example.com/`:
 
 Following pages and folders, inside `resources/views`, will be ignored by Benjamin:
 
-- Files not ending with '.blade.php'
-- Each file or directory starting with '_': you can use the underscore prefix to temporarily disable a page or a whole folder.
+- Files not ending with `.blade.php`.
+- Each file or directory starting with `_`: you can use the underscore prefix to temporarily disable a page or a whole folder from your website.
 - Directory `/errors`: inside this directory you should put [error pages](#error-pages).
 - Directory `/layouts`: use this folder to store all your layouts and layouts' parts (like the footer or the header). This is also the default folder for the [head view](#page-head).
 - Directory `/templates`: you can optionally use this folder if you have commons pieces used around the website and you want to keep them separate from the layout folder.
-- Directory `/vendor`: this is a Laravel's special folder.
-- Directory `/app`: you can use this folder in the case you want to add functionality to Benjamin and you need custom views, not processed by Benjamin.
+- Directory `/vendor`: this is a Laravel's special folder and its content is ignored.
+- Directory `/app`: you can use this folder in the case you want to add some functionalities to Benjamin and you need custom views, not processed by Benjamin.
 
 ### Error Pages
 
