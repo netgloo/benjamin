@@ -17,13 +17,13 @@
 
 {{-- Page Title --}}
 @section('page-title')
-  Example page
+  Example Page
 @endsection
 
 {{-- Layout Content --}}
 @section('content')
   
-  <div class="title">This is an example page.</div>
+  <div class="title">This Is Just An Example Page.</div>
   <p>You can open and customize this page from /resources/views/example.blade.php</p>
   <p><a href="/">Go to /</a></p>
 

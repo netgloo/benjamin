@@ -17,7 +17,7 @@
 
 {{-- Title --}}
 @section('title')
-  @yield('page-title') - My website
+  @yield('page-title') - My Website
 @endsection
 
 {{-- Body --}}

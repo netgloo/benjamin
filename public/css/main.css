@@ -6,14 +6,14 @@ body {
   margin: 0;
   padding: 0;
   width: 100%;
-  color: #9EBA9E;
-  background-color: #F0F0F0;
+  background-color: #F6F6F6;
   display: table;
   font-weight: 100;
   font-family: 'Open Sans';
 }
 
 p {
+  color: #898989;
   font-size: 18px;
 }
 
@@ -29,6 +29,7 @@ p {
 }
 
 .title {
+  color: #86B886;
   font-size: 60px;
   margin-bottom: 30px;
 }

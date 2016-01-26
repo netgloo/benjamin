@@ -18,7 +18,7 @@
 
 {{-- Title --}}
 @section('title')
-  Home - My website
+  Home - My Website
 @endsection
 
 {{-- Body --}}

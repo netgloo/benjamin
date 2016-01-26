@@ -266,13 +266,13 @@ Note that this page is ignored by the Benjamin platform and doesn't needs to fol
 
 ### Links
 
-If the browser [support the `pushState` api](http://caniuse.com/#search=pushState), each link between two pages internal to the website will be handled by Benjamin client side. When the user will click on a link for an internal page on your website, the target page will be loaded directly client side, without any call to the server. This allow a really smooth navigation between pages, without requiring any loading time.
+If the browser [support the `pushState` api](http://caniuse.com/#search=pushState), each link between two pages internal to the website will be handled by Benjamin client side. When the user will click on a link for an internal page on your website, the target page will be loaded directly client side, without any call to the server. This allow a true smooth navigation between pages, without requiring any loading time.
 
 You don't need to do anything, just normally add links in your web pages.
 
 #### Ignored links
 
-By default following links will be ignored by Benjiamin and will have a standard behaviour:
+By default following links will be ignored by Benjamin and will have a *standard* behaviour:
 
 - Links poiting to another domain.
 - Links with an application protocol different from the current one.
