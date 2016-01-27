@@ -8,9 +8,10 @@ Benjamin.on({
    * callback
    */
   'ready': function() {
-    console.log('ready');
+
     // Here there is no "next" since the page is ready and no more 
     // operations are required
+
     return;
   },
 
@@ -23,7 +24,6 @@ Benjamin.on({
    * callback.
    */
   'after': function(next) {
-    console.log('after');
 
     $(".content").velocity("transition.slideDownIn", {
       complete: function(elements) { 
@@ -45,64 +45,7 @@ Benjamin.on({
    * callback.
    */
   'out': function(next) {
-    console.log('out');
     // Do not forget to call next!
-    return next();
-  }
-
-});
-
-
-// ----------------------------------------------------------------------------
-// Page /
-// ----------------------------------------------------------------------------
-// 
-// Here you can write your callbacks for the index page.
-// 
-// ----------------------------------------------------------------------------
-
-Benjamin.on('/', {
-
-  'ready': function() {
-    console.log('ready /');
-    return;
-  },
-
-  'after': function(next) {
-    console.log('after /');
-    return next();
-  },
-
-  'out': function(next) {
-    console.log('out /');
-    return next();
-  }
-
-});
-
-
-// ----------------------------------------------------------------------------
-// Page /about
-// ----------------------------------------------------------------------------
-// 
-// And here callbacks for the about page.
-// 
-// ----------------------------------------------------------------------------
-
-Benjamin.on('/about', {
-
-  'ready': function() {
-    console.log('ready /about');
-    return;
-  },
-
-  'after': function(next) {
-    console.log('after /about');
-    return next();
-  },
-
-  'out': function(next) {
-    console.log('out /about');
     return next();
   }
 

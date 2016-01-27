@@ -6,7 +6,7 @@ You can try a Benjamin powered website here: http://benjamin.netgloo.com
 
 ### Everyone loves fast websites
 
-Benjamin is made for building fast websites. With Benjamin you can rapidly create websites that load fast and with an amazing smooth and instant navigation between pages. Website's pages will be changed directly client-side, without any call to the server.
+Benjamin is made for building fast websites. With Benjamin you can rapidly create websites that load fast and with an amazing smooth and instant navigation between pages. Website's pages will be changed directly client-side, without any call to the server and without any loading time.
 
 ### Easy development
 
@@ -35,17 +35,19 @@ Netgloo's website is built using Benjamin. Take a look: [http://netgloo.com/en](
 * [Getting Started](#getting-started)
 * [Website Pages](#website-pages)
 * [Layouts](#layouts)
-* [Multi-Language](#multi-language)
 * [Scripts](#scripts)
 * [Page Transitions](#page-transitions)
 * [Forms](#forms)
+* [Multi-Language](#multi-language)
 * [Production](#production)
 * [How It Works](#how-it-works)
 * [Credits](#credits)
 * [License](#license)
 
 <!-- * [Workflow](#workflow) -->
-<!-- * [Optimizations](#optimizations) -->
+<!-- * [Advanced](#advanced) -->
+<!--   * [Optimizations](#optimizations) -->
+<!--   * [Customizations](#customizations) -->
 
 
 ## Getting Started
@@ -138,12 +140,13 @@ Each view you will add inside `/resources/views` will be available as a page for
 
 For example:
 
-- The view `/resources/views/page.blade.php` will be showed at `http://example.com/page`.
-- The view `/resources/views/page/inside/folder.blade.php` will be showed at `http://example.com/page/inside/folder`.
+- The view `/resources/views/page.blade.php` will be served at `http://example.com/page`.
+- The view `/resources/views/inside/a/folder.blade.php` will be served at `http://example.com/inside/a/folder`.
 
 There are some exceptions to these rules, like the [index page](#index-page) served at the website's root path or some [special filenames and folder names](#ignored-pages-and-folders) that will be ignored by Benjamin.
 
-Also, you should avoid to use names already used inside the `/public` folder. For example, if you have the folder `public/images` containing your images, you can't create a view named `images.blade.php`. <!--since at the url `http://example.com/images` will be served the `images` folder inside `public` and the view will be shadowed and never available. -->
+Also, you should avoid to use names already used inside the `/public` folder. For example, if you have the folder `public/images` containing your images, you can't create a view named `images.blade.php`. 
+<!--since at the url `http://example.com/images` will be served the `images` folder inside `public` and the view will be shadowed and never available. -->
 
 To be correctly served with Benjamin, each view must follow the page structure described [below](#page-structure).
 
@@ -266,7 +269,7 @@ Note that this page is ignored by the Benjamin platform and doesn't needs to fol
 
 ### Links
 
-If the browser [support the `pushState` api](http://caniuse.com/#search=pushState), each link between two pages internal to the website will be handled by Benjamin client side. When the user will click on a link for an internal page on your website, the target page will be loaded directly client side, without any call to the server. This allow a true smooth navigation between pages, without requiring any loading time.
+If the browser [support the `pushState` api](http://caniuse.com/#search=pushState), each link between two pages internal to the website will be handled by Benjamin client side. When the user will click on a link for an internal page, the target page will be loaded directly client side, without any call to the server. This allow a true smooth navigation between pages, without requiring any loading time.
 
 You don't need to do anything, just normally add links in your web pages.
 
@@ -280,12 +283,226 @@ By default following links will be ignored by Benjamin and will have a *standard
 
 ### Ready callback
 
-TODO
+In the Javascript code, instead of jQuery's `$(document).ready` you should use [Benjamin's `ready` callback](#ready), simply in this way:
+
+``` javascript
+// public/js/main.js
+
+Benjamin.on({
+  
+  'ready': function() {
+
+    // Here your javascript code executed when the page is ready
+
+    return;
+  },
+
+});
+```
+
+This callback will be executed each time a page will be loaded directly from the server, at the same time jQuery's `$(document).ready` would be executed, and each time a page will be changed directly on the client, after the page transition process is finished.
+
+This is a good place for all the code that initializes page's elements or code that binds page's events. Likely you can put in this callback all the code you would have put inside jQuery's `ready`.
+
+If you have code that must be executed only once and not executed anymore, even changing page, you may want to use the [`init` callback](#init) callback instead.  Take a look in the [Callbacks section](#callbacks) for more informations about Benjamin's callbacks.
 
 
 ## Layouts
 
 TODO
+
+
+## Scripts
+
+TODO
+
+<!--
+Keep in minid:
+- jQuery is already included and you can use it in your custom javascript.
+- Use the ready callback instead of jQuery's $(document).ready
+- Scripts are loaded once and are not re-loaded (neither re-executed) when the page change. You should use Benjamin's callbacks.
+-->
+
+### Google Analytics
+
+TODO
+
+<!--
+### Split Benjamin.config in multiple files
+
+Perhaps you want to better organize your code and have a javascript file for each page.
+You can easily split the Benjamin's configuration on multiple javascript files. For example:
+
+``` javascript
+// main.js
+
+Benjamin.on({
+
+  'ready': function() {
+    //
+  }
+  
+  //
+
+});
+
+// index.js
+
+Benjamin.on('/', {
+  
+  'ready': function() {
+    //
+  }
+  
+});
+
+// about.js
+
+Benjamin.config('/about', {
+  
+  'ready': function() {
+    //
+  }
+
+});
+```
+
+Obviously you must avoid to repeat the global configuration and pages configurations in more than one place.
+
+#### Use a build tool
+
+Splitting the javascript file on multiple files requires to include each javascript file in your head. 
+
+A more practical solution is to use a build tool to concatenate all javascript files in one `main.js` file, than include only this one. The build tool solution will improve the website performance also, reducing the number of http request needed to get all your javascript files and allowing javascript's minimization.
+
+TODO: link to the build tool section.
+
+Note that you can use a build tool also if you have only a single javascript file.
+-->
+
+
+## Page Transitions
+
+TODO
+
+### Callbacks
+
+``` javascript
+// Global callbacks (do NOT put them inside $(document).ready)
+
+Benjamin.on({
+  'init': function() {  /* ... */ },
+  'ready', function() {  /* ... */ },
+  'out', function() {  /* ... */ }
+  'insert', function() {  /* ... */ },
+});
+
+// Callbacks for page '/'
+
+Benjamin.on('/', {
+  'ready': function() { /* ... */ },
+  'out': function() { /* ... */ }
+  'insert': function() { /* ... */ },
+});
+
+// Callbacks for page '/about'
+
+Benjamin.on('/about', {
+  'ready': function() { /* ... */ },
+  'out': function() { /* ... */ }
+  'insert': function() { /* ... */ },
+});
+
+// ...
+
+```
+
+#### init
+
+Initialize your things.
+
+- Executed only once, when the website is loaded from the server.
+- Executed before any `ready` callback.
+- Only global version exists.
+
+#### ready
+
+The page is ready.
+
+- Executed when the page is loaded form the server in the jQuery's document ready event (`$(document).ready`) and after the `insert` callback when the page is changed client-side.
+- Executed also when browsing the history.
+- This is a good place for binding things on your document (e.g. using `$('.some-element').on(...)`).
+- Both global and per-page versions exists. The global one will be always executed first.
+
+#### out ( `next` )
+
+The page is going to be changed with another page.
+
+- If you are on page `/a` and a link is clicked, this callback is executed before the content of `/a` is replaced.
+- It is **not** executed when the page is loaded from the server neither browsing the history.
+- Both global and per-page versions exists. The global one will be always executed first.
+- Remember to call `next()` to execute the `insert` callback for the page that will be displayed.
+
+#### insert ( `next` )
+
+The page is changed.
+
+- If a link to `/a` is clicked, this callback is executed when the content of the page `/a` is inside the body.
+- The document's title and the page url refers to the page `/a`.
+- It is **not** executed when the page is loaded from the server neither browsing the history.
+- Both global and per-page versions exists. The global one will be always executed first.
+- Remember to call `next()` to execute the `ready` callback for page `/a`.
+
+<!--
+- **Hint**: this is a good place for page transition effect since the page content is inside the `body` and ...
+-->
+
+### Example Of A Callbacks Chain
+
+We are on page `/` and we click on a link for `/a`, following callbacks are executed:
+
+1. `out` global
+1. `out` for page `/`
+1. `insert` global
+1. `insert` for page `/a`
+1. `ready` global
+1. `ready` for page `/a`
+
+
+### Effects
+
+TODO
+
+<!--
+Important: you should avoid to apply transitions effects directly to the `body` element. 
+-->
+
+
+## Forms
+
+TODO
+
+### Sending Emails
+
+TODO
+
+<!--
+## Workflow
+
+TODO
+
+### Build Tool
+
+TODO
+
+### Working With SASS
+
+TODO
+
+### Working With Javascript
+
+TODO
+-->
 
 
 ## Multi-Language
@@ -388,208 +605,6 @@ Look an example of a website with Benjamin configured for multilanguage on our d
 TODO
 
 
-## Scripts
-
-TODO
-
-### Google Analytics
-
-TODO
-
-<!--
-### Split Benjamin.config in multiple files
-
-Perhaps you want to better organize your code and have a javascript file for each page.
-You can easily split the Benjamin's configuration on multiple javascript files. For example:
-
-``` javascript
-// main.js
-
-Benjamin.on({
-
-  'ready': function() {
-    //
-  }
-  
-  //
-
-});
-
-// index.js
-
-Benjamin.on('/', {
-  
-  'ready': function() {
-    //
-  }
-  
-});
-
-// about.js
-
-Benjamin.config('/about', {
-  
-  'ready': function() {
-    //
-  }
-
-});
-```
-
-Obviously you must avoid to repeat the global configuration and pages configurations in more than one place.
-
-#### Use a build tool
-
-Splitting the javascript file on multiple files requires to include each javascript file in your head. 
-
-A more practical solution is to use a build tool to concatenate all javascript files in one `main.js` file, than include only this one. The build tool solution will improve the website performance also, reducing the number of http request needed to get all your javascript files and allowing javascript's minimization.
-
-TODO: link to the build tool section.
-
-Note that you can use a build tool also if you have only a single javascript file.
--->
-
-
-## Page Transitions
-
-TODO
-
-### Callbacks
-
-``` javascript
-// Global callbacks (do NOT put them inside $(document).ready)
-
-Benjamin.on({
-  'init': function() {  /* ... */ },
-  'ready', function() {  /* ... */ },
-  'after', function() {  /* ... */ },
-  'out', function() {  /* ... */ }
-});
-
-// Callbacks for page '/'
-
-Benjamin.on('/', {
-  'ready': function() { /* ... */ },
-  'after': function() { /* ... */ },
-  'out': function() { /* ... */ }
-});
-
-// Callbacks for page '/about'
-
-Benjamin.on('/about', {
-  'ready': function() { /* ... */ },
-  'after': function() { /* ... */ },
-  'out': function() { /* ... */ }
-});
-
-// ...
-
-```
-
-#### Init
-
-Initialize your things.
-
-- Executed only once, when the website is loaded from the server.
-- Executed before any `ready` callback.
-- Only global version exists.
-
-#### Ready
-
-The page is ready.
-
-- Executed when the page is loaded form the server in the JQuery's document ready event (`$(document).ready`) and after the `display` callback when the page is changed client-side.
-- Executed also when browsing the history.
-- This is a good place for binding things on your document (e.g. using `$('.some-element').on(...)`).
-- Both global and per-page versions exists. The global one will be always executed first.
-
-
-<!--
-### Before
-
-Before a page is changed.
-
-- If a link to `/a` is clicked this callback is executed before the content of `/a` is inside the body.
-- It is **not** executed when the page is loaded from the server. 
-- You can stop to change page avoiding to call the `next()` function. This will also prevent `after` and `ready` callbacks to be executed.
-
-Example: we are on page `/`, click on a link for page `/a`, the `before` callback is executed and inside the callback's function we have:
-
-- Current page is `/`.
-- You need to call `next()` to display the page `/a`.
--->
-
-#### After
-
-After a page is changed.
-
-- If a link to `/a` is clicked, this callback is executed when the content of the page `/a` is inside the body.
-- The document's title and the page url refers to the page `/a`.
-- It is **not** executed when the page is loaded from the server neither browsing the history.
-- Both global and per-page versions exists. The global one will be always executed first.
-- Remember to call `next()` to execute the `ready` callback for page `/a`.
-
-<!--
-- **Hint**: this is a good place for page transition effect since the page content is inside the `body` and ...
--->
-
-#### Out
-
-The page is going to be changed with another page.
-
-- If you are on page `/a` and a link is clicked, this callback is executed before the content of `/a` is replaced.
-- It is **not** executed when the page is loaded from the server neither browsing the history.
-- Both global and per-page versions exists. The global one will be always executed first.
-- Remember to call `next()` to execute the `after` callback for the page that will be displayed.
-
-### Example Of A Callbacks Chain
-
-We are on page `/` and we click on a link for `/a`, following callbacks are executed:
-
-1. `out` global
-1. `out` for page `/`
-1. `after` global
-1. `after` for page `/a`
-1. `ready` global
-1. `ready` for page `/a`
-
-
-### Effects
-
-TODO
-
-<!--
-Important: you should avoid to apply transitions effects directly to the `body` element. 
--->
-
-
-## Forms
-
-TODO
-
-### Sending Emails
-
-TODO
-
-<!--
-## Workflow
-
-TODO
-
-### Build Tool
-
-TODO
-
-### Working With SASS
-
-TODO
-
-### Working With Javascript
-
-TODO
--->
-
-
 ## Production
 
 TODO
@@ -618,9 +633,7 @@ TODO
 
 ## How It Works
 
-Coming Soon.
-
-*This section is under construction...*
+*Coming Soon.*
 
 <!--
 
