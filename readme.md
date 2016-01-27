@@ -83,7 +83,7 @@ The first command will download all PHP dependencies. Then you will create the `
 
 If it is the first time you run Composer, can happen that you get an error like the one below when you run `composer install`:
 
-``` bash
+``` 
 Could not fetch https://api.github.com/repos/username/repo/zipball/863df9687835c62aa423a22412d26fa2ebde3fd3, please create a GitHub OAuth token to go over the API rate limit
 Head to https://github.com/settings/tokens/new?scopes=repo&description=Composer+on+my+PC
 to retrieve a token. It will be stored in "/home/user/.composer/auth.json" for future use by Composer.
@@ -130,18 +130,18 @@ You can build the website working only inside these two folders:
 
 ## Website Pages
 
-Website pages are inside the folder `/resources/views`. Each page file must be a [Blade view](https://laravel.com/docs/5.2/blade), ending with the extension `.blade.php`.
+Website pages are inside the folder `resources/views`. Each page file must be a [Blade view](https://laravel.com/docs/5.2/blade), ending with the extension `.blade.php`.
 
 A Blade view is essentially a PHP file plus some really nice directives and an easy way for defining layouts. If you don't already know Blade, you will learn it effortless and very quickly. Take a look [here](https://laravel.com/docs/5.2/blade) for all the informations you need to know.
 
 ### Add New Pages
 
-Each view you will add inside `/resources/views` will be available as a page for your website. The URL path is composed by the view's path without the `.blade.php` extension. 
+Each view you will add inside `resources/views` will be available as a page for your website. The URL path is composed by the view's path without the `.blade.php` extension. 
 
 For example:
 
-- The view `/resources/views/page.blade.php` will be served at `http://example.com/page`.
-- The view `/resources/views/inside/a/folder.blade.php` will be served at `http://example.com/inside/a/folder`.
+- The view `resources/views/page.blade.php` will be served at `http://example.com/page`.
+- The view `resources/views/inside/a/folder.blade.php` will be served at `http://example.com/inside/a/folder`.
 
 There are some exceptions to these rules, like the [index page](#index-page) served at the website's root path or some [special filenames and folder names](#ignored-pages-and-folders) that will be ignored by Benjamin.
 
@@ -152,7 +152,7 @@ To be correctly served with Benjamin, each view must follow the page structure d
 
 #### Page Structure
 
-Each page file you add inside `/resources/views` must:
+Each page file you add inside `resources/views` must:
 
 - Extend `$benjamin`, with the directive `@extends($benjamin)`.
 - Define a section `title`: you should set here the page's title that will go inside the `<title>` tag.
@@ -219,7 +219,7 @@ You can modify the head's content as you want, but you should leave jQuery and B
 
 ### Index Page
 
-For the website's root will be served the content of the view named `index.blade.php` inside `/resources/views`.
+For the website's root will be served the content of the view named `index.blade.php` inside `resources/views`.
 
 For example, if the below content is inside `resources/views/index.blade.php`:
 
@@ -263,7 +263,7 @@ Following pages and folders, inside `resources/views`, will be ignored by Benjam
 
 ### Error Pages
 
-You can create a custom page for the 404 HTTP error (page not found) simply creating the view file `/resources/views/errors/404.blade.php`.
+You can create a custom page for the 404 HTTP error (page not found) simply creating the view file `resources/views/errors/404.blade.php`.
 
 Note that this page is ignored by the Benjamin platform and doesn't needs to follow the [page structure](#page-structure) of other web pages (then doesn't needs to extends `$benjamin`) but needs to define its own `<html>` and `<head>` tags.
 
@@ -283,16 +283,16 @@ By default following links will be ignored by Benjamin and will have a *standard
 
 ### Ready callback
 
-In the Javascript code, instead of jQuery's `$(document).ready` you should use [Benjamin's `ready` callback](#ready), simply in this way:
+In the Javascript code, instead of jQuery's `$(document).ready` you should use the [Benjamin's `ready` callback](#ready), in this way:
 
 ``` javascript
-// public/js/main.js
+// File: public/js/main.js
 
 Benjamin.on({
   
   'ready': function() {
 
-    // Here your javascript code executed when the page is ready
+    // Here your javascript code executed when a page is ready
 
     return;
   },
@@ -304,13 +304,106 @@ This callback will be executed each time a page will be loaded directly from the
 
 This is a good place for all the code that initializes page's elements or code that binds page's events. Likely you can put in this callback all the code you would have put inside jQuery's `ready`.
 
-If you have code that must be executed only once and not executed anymore, even changing page, you may want to use the [`init` callback](#init) callback instead.  Take a look in the [Callbacks section](#callbacks) for more informations about Benjamin's callbacks.
+If you have code that must be executed only once and not executed anymore, even changing page, you may want to use the [`init` callback](#init) instead. Take a look in the [Callbacks section](#callbacks) for more informations about Benjamin's callbacks.
 
 
 ## Layouts
 
-TODO
+Probably you need to structure your website using common layouts between pages. To do this you can just use [Blade's layout mechanisms](https://laravel.com/docs/5.2/blade#template-inheritance).
 
+In general, within Benjamin you are free to use any Blade's directives, as `@extends`, `@section`, `@yield`, `@include`, and all the others. The only thing you have to keep in mind is that the resulting view must follow the page structure as described [here](#page-Structure), that is: extend `$benjamin` (with `@extends($benjamin)`) and define sections `title` and `body`.
+
+So, for example, we can define a `main` layout inside the `layouts` folder:
+
+``` html
+<!-- File: resources/views/layouts/main.blade.php -->
+
+@extends($benjamin)
+
+@section('title')
+  @yield('page-title') - Website Name
+@endsection
+
+@section('body')
+  
+  <div class="content">
+
+    @yield('content')
+
+  </div>
+
+@endsection
+```
+
+Note that the `layouts` folder's content is [ignored by Benjamin](#ignored-pages-and-folders), so it will be **not** exposed as a web pages.
+
+We can now define a couple of web pages using the above layout:
+
+``` html
+<!-- File: resources/views/index.blade.php -->
+
+@extends('layouts.main')
+
+@section('page-title', 'Index')
+
+@section('content')
+  <p>Index page content ...</p>
+@endsection
+```
+
+``` html
+<!-- File: resources/views/example.blade.php -->
+
+@extends('layouts.main')
+
+@section('page-title', 'Example')
+
+@section('content')
+  <p>Example page content ...</p>
+@endsection
+```
+
+### Include
+
+Continuing the example above, we can also include in our layout a header and a footer using the `@include` directive:
+
+``` html
+<!-- File: resources/views/layouts/main.blade.php -->
+
+@extends($benjamin)
+
+@section('title')
+  @yield('page-title') - Website Name
+@endsection
+
+@section('body')
+  
+  @include('layouts.header')
+
+  <div class="content">
+
+    @yield('content')
+
+  </div>
+
+  @include('layouts.footer')
+
+@endsection
+```
+
+```
+<!-- File: resources/views/layouts/header.blade.php -->
+<header> 
+  Here there will be the header content ...
+</header>
+```
+
+```
+<!-- File: resources/views/layouts/footer.blade.php -->
+<footer> 
+  Here there will be the footer content ...
+</footer>
+```
 
 ## Scripts
 
@@ -524,14 +617,16 @@ If properly used, this method allow your website to be correctly indexed by sear
 You can enable the Benjamin's multi-langauge support simply adding language folders inside the `resources/lang` directory. 
 Each folder should be a supported language:
 
-    /resources
-      /lang
-        /en
-          messages.php
-        /es
-          messages.php
-        /fr
-          messages.php
+```
+/resources
+  /lang
+    /en
+      messages.php
+    /es
+      messages.php
+    /fr
+      messages.php
+```
 
 Within each language specific folder you should put a `messages.php` file containing language strings.
 
