@@ -1,6 +1,6 @@
 ## Benjamin
 
-Benjamin is a PHP/Javascript platform for easily building *static websites* with a really instant and smooth navigation out of the box.
+Benjamin is a PHP/JavaScript platform for easily building *static websites* with a really instant and smooth navigation out of the box.
 
 You can try a Benjamin powered website here: http://benjamin.netgloo.com
 
@@ -10,10 +10,7 @@ Benjamin is made for building fast websites. With Benjamin you can rapidly creat
 
 ### Easy development
 
-Benjamin is made to be easy to use. Also you will find some very useful features out of the box. Like a painless [multi-language support](#multi-language) and an easy way for adding [transitions effects](#page-transitions) changing page. 
-<!--
-Moreover you don't have to worry about URLs, fallbacks for browsers who doesn't supports `pushState`, or server side rendering, all this will be managed by Benjamin.
--->
+Benjamin is easy to use. You can start just adding new web pages and your website will be ready right away. Also you will find some very useful features out of the box. Like a painless [multi-language support](#multi-language) and an easy way for adding [transitions effects](#page-transitions) changing page. 
 
 ### Run everywhere
 
@@ -44,19 +41,59 @@ Netgloo's website is built using Benjamin. Take a look: [http://netgloo.com/en](
 * [Credits](#credits)
 * [License](#license)
 
-<!-- * [Workflow](#workflow) -->
-<!-- * [Advanced](#advanced) -->
-<!--   * [Optimizations](#optimizations) -->
-<!--   * [Customizations](#customizations) -->
+<!-- 
+* [Getting Started](#getting-started) 
+  * [Installation]
+  * ...
+* [Basics](#basics) 
+   * [Website Pages](#website-pages)
+   * ...
+   * [Workflow](#workflow) 
+   * ...
+* [Advanced](#advanced) 
+   * [How It Works](#how-it-works)
+   * [Optimizations](#optimizations) 
+   * [Customizations](#customizations) 
+   * ...
+-->
 
 
 ## Getting Started
 
-Benjamin is a pre-configured [Laravel](http://laravel.com/docs/installation) application. In order to getting started, you have only to [download it](#installation), run composer and start the application with `php artisan serve`. Then you can start to develop your website.
+<!--
+Benjamin is a pre-configured [Laravel](http://laravel.com/docs/installation) application. 
+-->
 
-Once installed, you can start building your website simply [adding new web pages](#add-new-pages). You don't have to worry about URLs, they will be automatically deduced by the page's filename stripping out the file extension. Client side you will have, out of the box, an instant navigation for each link between your web pages, just like a Single Page Application. Benjamin will use the `pushState` api to update the URL when a page is changed, but it will automatically fallback to a *standard* navigation if the browser doesn't support `pushState`.
+In order to getting started, you have only to [download Benjamin](#installation), run composer and start the application with `php artisan serve`. Then you can start to build your website.
 
-Then you can start to add [layouts](#layouts) to share a common structure between your pages, you can enable the [multi-language support](#multi-language) if your website need to provide more than one language, or you can start to play with [page transitions and callbacks](#page-transitions) if you want to control the switching process from a page to another one. Also you may want to add a [contact form](#forms) in your website that will [send an email](#sending-emails) when it is triggered. You will find all this really simple and straightforward.
+Once installed, you can start [adding new web pages](#add-new-pages). You don't have to worry about URLs, they will be automatically deduced by the page's filename stripping out the file extension.
+
+Client side you will have, out of the box, an instant navigation for each link between your web pages. Benjamin will use the `pushState` api to update the URL when a page is changed, but it will automatically fallback to a *standard* navigation if the browser doesn't support `pushState`. 
+
+**Note**: when web pages are directly changed client-side you have to think to your website like a [single-page application](https://en.wikipedia.org/wiki/Single-page_application), this have some implications on how the javascript code is loaded and executed. Take a look to the [Scripts section](#scripts) for more informations.
+
+After you added some web pages, you may want to create [layouts](#layouts) to share a common structure between pages, or you may want to play with [page transitions and callbacks](#page-transitions) if you need to control the switching process from a page to another one. Also you may need to add a [contact form](#forms) in your website that will [send an email](#sending-emails) when it is triggered, or you can enable the [multi-language support](#multi-language) if your website need to provide more than one language. You will find all this really simple and straightforward.
+
+### For what kind of websites you should consider Benjamin
+
+You should consider to use Benjmian if your website is a *static website*, in the sense that content of pages is fixed and can change only when you *manually* modify it. 
+<!--
+Also Benjamin works by pre-loading client-side the html code for **all** website's pages, so use it for website with a relative small number of pages (let's say less than one hundred of pages, but some test are required).
+-->
+
+This is a list of functionalities already supported by Benjamin:
+
+- Page layout
+- Manage transitions from a page to another one (client-side)
+- Sending forms to the server
+- Multi-language
+
+If your website must have all or some of the functionalities above you can consider to use Benjamin.
+
+Benjamin is quite flexible and it can be customized adding new features. Anyway you should avoid to use it if:
+
+- Your website have some dynamic content that could be different on each request.
+- Your website is constantly growing in the number of pages and constantly needs to add a lot of new pages.
 
 ### Requirements
 
@@ -311,7 +348,7 @@ If you have code that must be executed only once and not executed anymore, even 
 
 Probably you need to structure your website using common layouts between pages. To do this you can just use [Blade's layout mechanisms](https://laravel.com/docs/5.2/blade#template-inheritance).
 
-In general, within Benjamin you are free to use any Blade's directives, as `@extends`, `@section`, `@yield`, `@include`, and all the others. The only thing you have to keep in mind is that the resulting view must follow the page structure as described [here](#page-Structure), that is: extend `$benjamin` (with `@extends($benjamin)`) and define sections `title` and `body`.
+In general, within Benjamin you are free to use any Blade's directives, as `@extends`, `@section`, `@yield`, `@include`, and all the others. The only thing you have to keep in mind is that the resulting view must follow the page structure as described [here](#page-structure), that is: extend `$benjamin` (with `@extends($benjamin)`) and define sections `title` and `body`.
 
 So, for example, we can define a `main` layout inside the `layouts` folder:
 
@@ -335,7 +372,7 @@ So, for example, we can define a `main` layout inside the `layouts` folder:
 @endsection
 ```
 
-Note that the `layouts` folder's content is [ignored by Benjamin](#ignored-pages-and-folders), so it will be **not** exposed as a web pages.
+Note that the `layouts` folder's content is [ignored by Benjamin](#ignored-pages-and-folders), so it will be **not** exposed as web pages.
 
 We can now define a couple of web pages using the above layout:
 
@@ -363,7 +400,7 @@ We can now define a couple of web pages using the above layout:
 @endsection
 ```
 
-### Include
+### Include layout's parts
 
 Continuing the example above, we can also include in our layout a header and a footer using the `@include` directive:
 
@@ -407,6 +444,8 @@ Continuing the example above, we can also include in our layout a header and a f
 
 ## Scripts
 
+Using Benjamin you should think at your website as a [single-page application](https://en.wikipedia.org/wiki/Single-page_application). This implies that all the scripts included in the `<head>` tag are loaded and executed only once, when the website is loaded from the server. 
+
 TODO
 
 <!--
@@ -419,59 +458,6 @@ Keep in minid:
 ### Google Analytics
 
 TODO
-
-<!--
-### Split Benjamin.config in multiple files
-
-Perhaps you want to better organize your code and have a javascript file for each page.
-You can easily split the Benjamin's configuration on multiple javascript files. For example:
-
-``` javascript
-// main.js
-
-Benjamin.on({
-
-  'ready': function() {
-    //
-  }
-  
-  //
-
-});
-
-// index.js
-
-Benjamin.on('/', {
-  
-  'ready': function() {
-    //
-  }
-  
-});
-
-// about.js
-
-Benjamin.config('/about', {
-  
-  'ready': function() {
-    //
-  }
-
-});
-```
-
-Obviously you must avoid to repeat the global configuration and pages configurations in more than one place.
-
-#### Use a build tool
-
-Splitting the javascript file on multiple files requires to include each javascript file in your head. 
-
-A more practical solution is to use a build tool to concatenate all javascript files in one `main.js` file, than include only this one. The build tool solution will improve the website performance also, reducing the number of http request needed to get all your javascript files and allowing javascript's minimization.
-
-TODO: link to the build tool section.
-
-Note that you can use a build tool also if you have only a single javascript file.
--->
 
 
 ## Page Transitions
@@ -586,7 +572,15 @@ TODO
 
 ### Build Tool
 
-TODO
+#### Use a build tool
+
+Splitting the javascript file on multiple files requires to include each javascript file in your head. 
+
+A more practical solution is to use a build tool to concatenate all javascript files in one `main.js` file, than include only this one. The build tool solution will improve the website performance also, reducing the number of http request needed to get all your javascript files and allowing javascript's minimization.
+
+TODO: link to the build tool section.
+
+Note that you can use a build tool also if you have only a single javascript file.
 
 ### Working With SASS
 
