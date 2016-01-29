@@ -1,5 +1,10 @@
 <IfModule mod_rewrite.c>
+
+  # Turn Off mod_dir Redirect For Existing Directories
+  DirectorySlash Off
+  
+  # Rewrite For Public Folder
   RewriteEngine on
-  RewriteBase /
-  RewriteRule ^(.*)$ /public/$1 [L]
+  RewriteRule ^(.*)$ public/$1 [L]
+
 </IfModule>
