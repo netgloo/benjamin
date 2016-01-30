@@ -1,3 +1,5 @@
+**NOTE:** *Benjamin in under construction in this moment. Version 1.0 will coming soon.*
+
 ## Benjamin
 
 Benjamin is a PHP/JavaScript platform for easily building *static websites* with a really instant and smooth navigation out of the box.
@@ -36,19 +38,20 @@ Netgloo's website is built using Benjamin. Take a look: [http://netgloo.com/en](
 * [Page Transitions](#page-transitions)
 * [Forms](#forms)
 * [Multi-Language](#multi-language)
-* [Production](#production)
+* [Website Deployment](#website-deployment)
 * [How It Works](#how-it-works)
 * [Credits](#credits)
 * [License](#license)
 
 <!-- 
 * [Getting Started](#getting-started) 
+* [Setup]
   * [Installation]
   * ...
 * [Basics](#basics) 
    * [Website Pages](#website-pages)
    * ...
-   * [Workflow](#workflow) 
+   * [Development Workflow](#development-workflow) 
    * ...
 * [Advanced](#advanced) 
    * [How It Works](#how-it-works)
@@ -59,6 +62,10 @@ Netgloo's website is built using Benjamin. Take a look: [http://netgloo.com/en](
 
 
 ## Getting Started
+
+<!--
+### Introduction
+-->
 
 <!--
 Benjamin is a pre-configured [Laravel](http://laravel.com/docs/installation) application. 
@@ -74,7 +81,7 @@ Client side you will have, out of the box, an instant navigation for each link b
 
 After you added some web pages, you may want to create [layouts](#layouts) to share a common structure between pages, or you may want to play with [page transitions and callbacks](#page-transitions) if you need to control the switching process from a page to another one. Also you may need to add a [contact form](#forms) in your website that will [send an email](#sending-emails) when it is triggered, or you can enable the [multi-language support](#multi-language) if your website need to provide more than one language. You will find all this really simple and straightforward.
 
-### For what kind of websites you should consider Benjamin
+#### For what kind of websites you should consider Benjamin
 
 You should consider to use Benjmian if your website is a *static website*, in the sense that content of pages is fixed and can change only when you *manually* modify it. 
 <!--
@@ -92,7 +99,7 @@ If your website must have all or some of the functionalities above you can consi
 
 Benjamin is quite flexible and it can be customized adding new features. Anyway you should avoid to use it if:
 
-- Your website have some dynamic content that could be different on each request.
+- Your website have some dynamic content that could changes on different requests.
 - Your website is constantly growing in the number of pages and constantly needs to add a lot of new pages.
 
 ### Requirements
@@ -152,11 +159,11 @@ Then visit [http://localhost:8000](http://localhost:8000) and you will see a wel
 
 Now you can start adding your own [web pages and folders](#website-pages), and building your website.
 
-**Note**: in the production server you shouldn't use `php artisan serve` but rely on Apache (or Nginx) instead. Take a look on the [Production section](#production) for more informations.
+**Note**: in the production server you shouldn't use `php artisan serve` but rely on Apache (or Nginx) instead. Take a look on the [Website Deployment section](#website-deployment) for more informations.
 
 ### Application Structure
 
-A Benjamin website is a Laravel application, so you can take a look [here](https://laravel.com/docs/5.2/structure#the-root-directory) for any detail about the whole application's structure.
+A Benjamin website is a [Laravel](https://laravel.com) application, so you can take a look [here](https://laravel.com/docs/5.2/structure#the-root-directory) for any detail about the whole application's structure.
 
 However we want to create simple and static websites, so it is not needed to know in depth the whole structure.
 You can build the website working only inside these two folders:
@@ -198,8 +205,7 @@ Each page file you add inside `resources/views` must:
 For example, this is a valid Benjamin's page file:
 
 ``` html
-<!-- resources/views/example.blade.php -->
-
+<!-- File: resources/views/example.blade.php -->
 @extends($benjamin)
 
 @section('title')
@@ -320,7 +326,7 @@ By default following links will be ignored by Benjamin and will have a *standard
 
 ### Ready callback
 
-In the Javascript code, instead of jQuery's `$(document).ready` you should use the [Benjamin's `ready` callback](#ready), in this way:
+In the Javascript code, use Benjamin's [`ready`](#ready) callback to execute JavaScript code each time a page is loaded:
 
 ``` javascript
 // File: public/js/main.js
@@ -337,16 +343,14 @@ Benjamin.on({
 });
 ```
 
-This callback will be executed each time a page will be loaded directly from the server, at the same time jQuery's `$(document).ready` would be executed, and each time a page will be changed directly on the client, after the page transition process is finished.
+You should use this callback in place of jQuery's `$(document).ready`. If you have some JavaScript code that needs to run only once, use Benjamin's [`init`](#init) callback.
 
-This is a good place for all the code that initializes page's elements or code that binds page's events. Likely you can put in this callback all the code you would have put inside jQuery's `ready`.
-
-If you have code that must be executed only once and not executed anymore, even changing page, you may want to use the [`init` callback](#init) instead. Take a look in the [Callbacks section](#callbacks) for more informations about Benjamin's callbacks.
+Take a look in the [Scripts section](#scripts) for more informations about how to properly use JavaScript in Benjamin.
 
 
 ## Layouts
 
-Probably you need to structure your website using common layouts between pages. To do this you can just use [Blade's layout mechanisms](https://laravel.com/docs/5.2/blade#template-inheritance).
+If you need to structure your website using common layouts between pages you can just use [Blade's layout mechanisms](https://laravel.com/docs/5.2/blade#template-inheritance).
 
 In general, within Benjamin you are free to use any Blade's directives, as `@extends`, `@section`, `@yield`, `@include`, and all the others. The only thing you have to keep in mind is that the resulting view must follow the page structure as described [here](#page-structure), that is: extend `$benjamin` (with `@extends($benjamin)`) and define sections `title` and `body`.
 
@@ -444,52 +448,70 @@ Continuing the example above, we can also include in our layout a header and a f
 
 ## Scripts
 
-Using Benjamin you should think at your website as a [single-page application](https://en.wikipedia.org/wiki/Single-page_application). This implies that all the scripts included in the `<head>` tag are loaded and executed only once, when the website is loaded from the server. 
+Using Benjamin you should think at your website as a [single-page application](https://en.wikipedia.org/wiki/Single-page_application). This implies that all the scripts included inside the `<head>` tag are loaded and executed only once, when the website is loaded from the server. If the page is directly changed client-side such scripts are **not** re-executed for the new page. jQuery's `$(document).ready` function also will run only when the website is loaded the first time and not each time a page is changed.
 
-TODO
+Use Benjamin's [`ready`](#ready) callback to execute JavaScript code each time a page is loaded. 
 
-<!--
-Keep in minid:
-- jQuery is already included and you can use it in your custom javascript.
-- Use the ready callback instead of jQuery's $(document).ready
-- Scripts are loaded once and are not re-loaded (neither re-executed) when the page change. You should use Benjamin's callbacks.
--->
+This callback will be executed each time a page will be loaded directly from the server, at the same time jQuery's `$(document).ready` would be executed, and each time a page will be changed directly on the client, after the page transition process is finished.
+
+This is a good place for all the code that initializes page's elements or code that binds page's events. Likely you can put in this callback all the code you would have put inside jQuery's `ready`.
+
+If you have code that must be executed only once and not executed anymore, even changing page, you may want to use the [`init` callback](#init) instead.
+
+**Note**: jQuery is already included inside Benjamin and you can use it inside your custom javascript code.
+
+### Scripts Inside Body
+
+Scripts inside the `<body>` tag are executed each time a page is loaded.
 
 ### Google Analytics
 
-TODO
+
+
+
+Some third-party scripts may doesn't works correctly with Benjamin if they 
+The default Google Analytics script is one example of a script that should be 
+
+The Google Analytics scripts is a quite common scripts and likely you may want to add it in your website.
+
+...
 
 
 ## Page Transitions
 
-TODO
-
 ### Callbacks
 
-``` javascript
-// Global callbacks (do NOT put them inside $(document).ready)
+Do NOT put them inside `$(document).ready`.
 
+Global callbacks:
+
+``` javascript
 Benjamin.on({
   'init': function() {  /* ... */ },
   'ready', function() {  /* ... */ },
-  'out', function() {  /* ... */ }
-  'insert', function() {  /* ... */ },
+  'out', function(next) {  /* ... */ }
+  'insert', function(next) {  /* ... */ },
 });
 
+```
+
+*Per-page* callbacks:
+
+``` javascript
 // Callbacks for page '/'
 
 Benjamin.on('/', {
   'ready': function() { /* ... */ },
-  'out': function() { /* ... */ }
-  'insert': function() { /* ... */ },
+  'out': function(next) { /* ... */ }
+  'insert': function(next) { /* ... */ },
 });
 
-// Callbacks for page '/about'
+// Callbacks for page '/example'
 
-Benjamin.on('/about', {
+Benjamin.on('/example', {
   'ready': function() { /* ... */ },
-  'out': function() { /* ... */ }
-  'insert': function() { /* ... */ },
+  'out': function(next) { /* ... */ }
+  'insert': function(next) { /* ... */ },
 });
 
 // ...
@@ -509,26 +531,26 @@ Initialize your things.
 The page is ready.
 
 - Executed when the page is loaded form the server in the jQuery's document ready event (`$(document).ready`) and after the `insert` callback when the page is changed client-side.
-- Executed also when browsing the history.
+- Executed also when the browser's history is navigated (back and forward).
 - This is a good place for binding things on your document (e.g. using `$('.some-element').on(...)`).
 - Both global and per-page versions exists. The global one will be always executed first.
 
-#### out ( `next` )
+#### out (`next`)
 
 The page is going to be changed with another page.
 
 - If you are on page `/a` and a link is clicked, this callback is executed before the content of `/a` is replaced.
-- It is **not** executed when the page is loaded from the server neither browsing the history.
+- It is **not** executed when the page is loaded from the server neither when the page is showed navigating in the browser's history.
 - Both global and per-page versions exists. The global one will be always executed first.
 - Remember to call `next()` to execute the `insert` callback for the page that will be displayed.
 
-#### insert ( `next` )
+#### insert (`next`)
 
 The page is changed.
 
 - If a link to `/a` is clicked, this callback is executed when the content of the page `/a` is inside the body.
 - The document's title and the page url refers to the page `/a`.
-- It is **not** executed when the page is loaded from the server neither browsing the history.
+- It is **not** executed when the page is loaded from the server neither when the page is showed navigating in the browser's history.
 - Both global and per-page versions exists. The global one will be always executed first.
 - Remember to call `next()` to execute the `ready` callback for page `/a`.
 
@@ -538,22 +560,22 @@ The page is changed.
 
 ### Example Of A Callbacks Chain
 
-We are on page `/` and we click on a link for `/a`, following callbacks are executed:
+We are on page `/a` and we click on a link for `/b`, following callbacks are executed:
 
-1. `out` global
-1. `out` for page `/`
-1. `insert` global
-1. `insert` for page `/a`
-1. `ready` global
-1. `ready` for page `/a`
+1. `out(next)` global.
+1. `out(next)` for page `/a`.
+1. `insert(next)` global.
+1. `insert(next)` for page `/b`.
+1. `ready()` global.
+1. `ready()` for page `/b`.
 
 
+<!--
 ### Effects
 
 TODO
 
-<!--
-Important: you should avoid to apply transitions effects directly to the `body` element. 
+Note: you should avoid to apply transitions effects directly to the `body` element. 
 -->
 
 
@@ -564,32 +586,6 @@ TODO
 ### Sending Emails
 
 TODO
-
-<!--
-## Workflow
-
-TODO
-
-### Build Tool
-
-#### Use a build tool
-
-Splitting the javascript file on multiple files requires to include each javascript file in your head. 
-
-A more practical solution is to use a build tool to concatenate all javascript files in one `main.js` file, than include only this one. The build tool solution will improve the website performance also, reducing the number of http request needed to get all your javascript files and allowing javascript's minimization.
-
-TODO: link to the build tool section.
-
-Note that you can use a build tool also if you have only a single javascript file.
-
-### Working With SASS
-
-TODO
-
-### Working With Javascript
-
-TODO
--->
 
 
 ## Multi-Language
@@ -694,7 +690,34 @@ Look an example of a website with Benjamin configured for multilanguage on our d
 TODO
 
 
-## Production
+<!--
+## Development Workflow
+
+TODO
+
+### Build Tool
+
+#### Use a build tool
+
+Splitting the javascript file on multiple files requires to include each javascript file in your head. 
+
+A more practical solution is to use a build tool to concatenate all javascript files in one `main.js` file, than include only this one. The build tool solution will improve the website performance also, reducing the number of http request needed to get all your javascript files and allowing javascript's minimization.
+
+TODO: link to the build tool section.
+
+Note that you can use a build tool also if you have only a single javascript file.
+
+### Working With SASS
+
+TODO
+
+### Working With Javascript
+
+TODO
+-->
+
+
+## Website deployment
 
 TODO
 
