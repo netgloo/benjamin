@@ -1,4 +1,4 @@
-**!!! IMPORTANT !!!:** Benjamin in under construction in this moment. Version 1.0 will coming soon. Back to visit us in a few days.
+_**!!! IMPORTANT !!!:** Benjamin in under construction in this moment. Version 1.0 will coming soon. Back to visit us in a few days._
 
 ## Benjamin
 
@@ -77,7 +77,7 @@ Once installed, you can start [adding new web pages](#add-new-pages). You don't 
 
 Client side you will have, out of the box, an instant navigation for each link between your web pages. Benjamin will use the `pushState` api to update the URL when a page is changed, but it will automatically fallback to a *standard* navigation if the browser doesn't support `pushState`. 
 
-**Note**: when web pages are directly changed client-side you have to think to your website like a [single-page application](https://en.wikipedia.org/wiki/Single-page_application), this have some implications on how the javascript code is loaded and executed. Take a look to the [Scripts section](#scripts) for more informations.
+**Note**: when web pages are directly changed client-side you have to think to your website like a [single-page application](https://en.wikipedia.org/wiki/Single-page_application), this have some implications on how the javascript code is loaded and executed. Take a look to the [Scripts](#scripts) section for more informations.
 
 After you added some web pages, you may want to create [layouts](#layouts) to share a common structure between pages, or you may want to play with [page transitions and callbacks](#page-transitions) if you need to control the switching process from a page to another one. Also you may need to add a [contact form](#forms) in your website that will [send an email](#sending-emails) when it is triggered, or you can enable the [multi-language support](#multi-language) if your website need to provide more than one language. You will find all this really simple and straightforward.
 
@@ -159,7 +159,7 @@ Then visit [http://localhost:8000](http://localhost:8000) and you will see a wel
 
 Now you can start adding your own [web pages and folders](#website-pages), and building your website.
 
-**Note**: in the production server you shouldn't use `php artisan serve` but rely on Apache (or Nginx) instead. Take a look on the [Website Deployment section](#website-deployment) for more informations.
+**Note**: in the production server you shouldn't use `php artisan serve` but rely on Apache (or Nginx) instead. Take a look on the [Website Deployment](#website-deployment) section for more informations.
 
 ### Application Structure
 
@@ -316,7 +316,7 @@ If the browser [support the `pushState` api](http://caniuse.com/#search=pushStat
 
 You don't need to do anything, just normally add links in your web pages.
 
-#### Ignored links
+#### Ignored Links
 
 By default following links will be ignored by Benjamin and will have a *standard* behaviour:
 
@@ -324,7 +324,7 @@ By default following links will be ignored by Benjamin and will have a *standard
 - Links with an application protocol different from the current one.
 - Links with `data-bj-ignore` attribute.
 
-### Ready callback
+### Ready Callback
 
 In the Javascript code, use Benjamin's [`ready`](#ready) callback to execute JavaScript code each time a page is loaded:
 
@@ -345,7 +345,7 @@ Benjamin.on({
 
 You should use this callback in place of jQuery's `$(document).ready`. If you have some JavaScript code that needs to run only once, use Benjamin's [`init`](#init) callback.
 
-Take a look in the [Scripts section](#scripts) for more informations about how to properly use JavaScript in Benjamin.
+Take a look in the [Scripts](#scripts) section for more informations about how to properly use JavaScript in Benjamin.
 
 
 ## Layouts
@@ -404,7 +404,7 @@ We can now define a couple of web pages using the above layout:
 @endsection
 ```
 
-### Include layout's parts
+### Include Layout Parts
 
 Continuing the example above, we can also include in our layout a header and a footer using the `@include` directive:
 
@@ -448,27 +448,25 @@ Continuing the example above, we can also include in our layout a header and a f
 
 ## Scripts
 
-Using Benjamin you should think at your website as a [single-page applications](https://en.wikipedia.org/wiki/Single-page_application) (SPA). This implies that all the scripts included inside the `<head>` tag are loaded and executed only once, when the website is loaded from the server. If the page is directly changed client-side such scripts are **not** re-executed for the new page. jQuery's `$(document).ready` function also will run only when the website is loaded the first time and not each time a page is changed.
+Using Benjamin you should think at your website as a [Single-Page Application](https://en.wikipedia.org/wiki/Single-page_application) (SPA). This implies that all the scripts included inside the `<head>` tag are loaded and executed only once, when the website is loaded from the server. If the page is dynamically loaded (it is directly changed client-side) such scripts are **not** re-executed for the new page. jQuery's `$(document).ready` function also will run only when the website is loaded the first time and not each time a page is loaded.
 
-Use Benjamin's [`ready`](#ready) callback to execute JavaScript code each time a page is loaded. 
+Use Benjamin's [`ready`](#ready) callback to execute JavaScript code on each loaded page.
 
-This callback will be executed each time a page will be loaded directly from the server, at the same time jQuery's `$(document).ready` would be executed, and each time a page will be changed directly on the client, after the page transition process is finished.
+This callback will be executed each time a page will be loaded directly from the server, at the same time jQuery's `$(document).ready` would be executed, and each time a page will be dynamically loaded, after the page transition process is finished.
 
 This is a good place for all the code that initializes page's elements or code that binds page's events. Likely you can put in this callback all the code you would have put inside jQuery's `ready`.
 
 If you have code that must be executed only once and not executed anymore, even changing page, you may want to use the [`init` callback](#init) instead.
 
-**Note**: jQuery is already included inside Benjamin. You can use it inside your custom javascript code.
+**Note**: jQuery is already included inside Benjamin. You don't need to include it and you can use it inside your custom javascript code.
 
-### Scripts Inside Body
+### Scripts Inside The Body
 
 Scripts inside the `<body>` tag are executed each time a page is loaded.
 
-### Google Analytics
+### Page Tracking With Google Analytics
 
-If you want to add [Google Analytics](https://support.google.com/analytics/answer/1008015?hl=en) on your Benjamin website you should use Google's [`analytics.js` library](https://developers.google.com/analytics/devguides/collection/analyticsjs/). 
-
-This library provides [functions and support for SPAs](https://developers.google.com/analytics/devguides/collection/analyticsjs/single-page-applications).
+If you want to [track pages views](https://developers.google.com/analytics/devguides/collection/analyticsjs/pages) with Google Analytics on your Benjamin website you should use the Google's [`analytics.js`](https://developers.google.com/analytics/devguides/collection/analyticsjs/) library. This library provides [functions and support for SPAs](https://developers.google.com/analytics/devguides/collection/analyticsjs/single-page-applications).
 
 So, keeping in mind that web pages are loaded dynamically within a Benjamin website, you should add the following script inside the `<head>` tag:
 
@@ -487,9 +485,7 @@ ga('create', 'UA-XXXXX-Y', 'auto');
 
 Replacing the string `'UA-XXXXX-Y'` with your tracking ID. 
 
-The above JavaScript snippet is just the Google official one, taken from [here](https://developers.google.com/analytics/devguides/collection/analyticsjs/), without the last JavaScript instruction `ga('send', 'pageview');`.
-
-You should move such instruction inside the Benjamin's [`ready`](#ready) callback, in this way:
+The above JavaScript snippet is just the Google official one, taken from [here](https://developers.google.com/analytics/devguides/collection/analyticsjs/), without the last JavaScript instruction `ga('send', 'pageview');`. You should move such instruction inside the Benjamin's [`ready`](#ready) callback, in this way:
 
 ```
 Benjamin.on({
@@ -507,8 +503,7 @@ Benjamin.on({
 });
 ```
 
-**Explanation**: ...
-
+The code above first will update the current page path and title for Google Analytics, with the `'set'` method, then will send a pageview hits. This will be executed on each page loaded, tracking all pages visited by an user.
 
 
 ## Page Transitions
