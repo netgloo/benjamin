@@ -1,4 +1,4 @@
-**NOTE:** *Benjamin in under construction in this moment. Version 1.0 will coming soon.*
+**!!! IMPORTANT !!!:** Benjamin in under construction in this moment. Version 1.0 will coming soon. Back to visit us in a few days.
 
 ## Benjamin
 
@@ -71,7 +71,7 @@ Netgloo's website is built using Benjamin. Take a look: [http://netgloo.com/en](
 Benjamin is a pre-configured [Laravel](http://laravel.com/docs/installation) application. 
 -->
 
-In order to getting started, you have only to [download Benjamin](#installation), run composer and start the application with `php artisan serve`. Then you can start to build your website.
+In order to getting started, you have only to [install Benjamin](#installation), run composer and [launch the application](#start-the-application) with `php artisan serve`. Then you can start to build your website.
 
 Once installed, you can start [adding new web pages](#add-new-pages). You don't have to worry about URLs, they will be automatically deduced by the page's filename stripping out the file extension.
 
@@ -180,9 +180,9 @@ A Blade view is essentially a PHP file plus some really nice directives and an e
 
 ### Add New Pages
 
-Each view you will add inside `resources/views` will be available as a page for your website. The URL path is composed by the view's path without the `.blade.php` extension. 
+Just add new Blade views inside `resources/views`. 
 
-For example:
+Views will be available as pages for your website. The URL path will be composed by the view's path without the `.blade.php` extension. For example:
 
 - The view `resources/views/page.blade.php` will be served at `http://example.com/page`.
 - The view `resources/views/inside/a/folder.blade.php` will be served at `http://example.com/inside/a/folder`.
@@ -192,7 +192,7 @@ There are some exceptions to these rules, like the [index page](#index-page) ser
 Also, you should avoid to use names already used inside the `/public` folder. For example, if you have the folder `public/images` containing your images, you can't create a view named `images.blade.php`. 
 <!--since at the url `http://example.com/images` will be served the `images` folder inside `public` and the view will be shadowed and never available. -->
 
-To be correctly served with Benjamin, each view must follow the page structure described [below](#page-structure).
+To be correctly served with Benjamin, each view must follow the page structure described [next](#page-structure).
 
 #### Page Structure
 
@@ -448,7 +448,7 @@ Continuing the example above, we can also include in our layout a header and a f
 
 ## Scripts
 
-Using Benjamin you should think at your website as a [single-page application](https://en.wikipedia.org/wiki/Single-page_application). This implies that all the scripts included inside the `<head>` tag are loaded and executed only once, when the website is loaded from the server. If the page is directly changed client-side such scripts are **not** re-executed for the new page. jQuery's `$(document).ready` function also will run only when the website is loaded the first time and not each time a page is changed.
+Using Benjamin you should think at your website as a [single-page applications](https://en.wikipedia.org/wiki/Single-page_application) (SPA). This implies that all the scripts included inside the `<head>` tag are loaded and executed only once, when the website is loaded from the server. If the page is directly changed client-side such scripts are **not** re-executed for the new page. jQuery's `$(document).ready` function also will run only when the website is loaded the first time and not each time a page is changed.
 
 Use Benjamin's [`ready`](#ready) callback to execute JavaScript code each time a page is loaded. 
 
@@ -458,7 +458,7 @@ This is a good place for all the code that initializes page's elements or code t
 
 If you have code that must be executed only once and not executed anymore, even changing page, you may want to use the [`init` callback](#init) instead.
 
-**Note**: jQuery is already included inside Benjamin and you can use it inside your custom javascript code.
+**Note**: jQuery is already included inside Benjamin. You can use it inside your custom javascript code.
 
 ### Scripts Inside Body
 
@@ -466,15 +466,49 @@ Scripts inside the `<body>` tag are executed each time a page is loaded.
 
 ### Google Analytics
 
+If you want to add [Google Analytics](https://support.google.com/analytics/answer/1008015?hl=en) on your Benjamin website you should use Google's [`analytics.js` library](https://developers.google.com/analytics/devguides/collection/analyticsjs/). 
 
+This library provides [functions and support for SPAs](https://developers.google.com/analytics/devguides/collection/analyticsjs/single-page-applications).
 
+So, keeping in mind that web pages are loaded dynamically within a Benjamin website, you should add the following script inside the `<head>` tag:
 
-Some third-party scripts may doesn't works correctly with Benjamin if they 
-The default Google Analytics script is one example of a script that should be 
+``` html
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-The Google Analytics scripts is a quite common scripts and likely you may want to add it in your website.
+ga('create', 'UA-XXXXX-Y', 'auto');
+</script>
+<!-- End Google Analytics -->
+```
 
-...
+Replacing the string `'UA-XXXXX-Y'` with your tracking ID. 
+
+The above JavaScript snippet is just the Google official one, taken from [here](https://developers.google.com/analytics/devguides/collection/analyticsjs/), without the last JavaScript instruction `ga('send', 'pageview');`.
+
+You should move such instruction inside the Benjamin's [`ready`](#ready) callback, in this way:
+
+```
+Benjamin.on({
+  
+  'ready': function() {
+
+    ga('set', { page: window.location.pathname, title: document.title });
+    ga('send', 'pageview');
+
+    //
+
+    return;
+  },
+
+});
+```
+
+**Explanation**: ...
+
 
 
 ## Page Transitions
