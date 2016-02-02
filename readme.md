@@ -520,7 +520,7 @@ When a page is loaded directly from the server or when a page is opened through 
 
 ### Callbacks
 
-There are two types of callbacks: **global** and **per-page**. First one are always executed independently on the current page. Second one are executed only on the given page.
+There are two types of callbacks: **global** and **per-page**. First ones are always executed independently on the current page. Second ones are executed only on the given page.
 
 You can set your own callback functions, inside your JavaScript code, in this way:
 
@@ -555,7 +555,7 @@ Benjamin.on('/example', {
 
 **Note**: do not put above callbacks definitions inside jQuery's `$(document).ready`.
 
-#### init
+#### init ( )
 
 Initialize your things.
 
@@ -563,7 +563,7 @@ Initialize your things.
 - Executed before any `ready` callback.
 - Only global version exists.
 
-#### ready
+#### ready ( )
 
 The page is ready.
 
@@ -738,7 +738,7 @@ TODO
 -->
 
 
-## Website deployment
+## Website Deployment
 
 TODO
 
@@ -749,18 +749,18 @@ TODO
 TODO
 
 
-#### Cache pages
+#### Cache Pages
 
 - Abilitare CACHE_DRIVER=file in .env (abilitato di default)
 - Per disabilitare: commentare (o rimuovere) la riga CACHE_DRIVER. Riavviare php artisan serve.
 - Il risultato di /api/pages viene salvato nella cache e viene aggiornato 
   ad ogni modifica all'interno della cartella views
 
-#### Minify pages
+#### Minify Pages
 
 - ...
 
-#### Cache Laravel's configurations
+#### Cache Laravel's Configurations
 
 -->
 
@@ -772,23 +772,6 @@ TODO
 
 How it works => Link to Netgloo's Blog
 
--->
-
-<!--
-
-## Limits
-
-#### Javascript run once for "on-site" navigation
-
-TODO
-
-#### Code inside JQuery document ready will NOT works as expected
-
-TODO
-
-#### Does not support dynamic content
-
-TODO
 -->
 
 ## Credits

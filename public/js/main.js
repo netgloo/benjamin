@@ -17,13 +17,26 @@ Benjamin.on({
 
 
   /**
+   * This callback is executed when this page is going out to be changed with
+   * another page. It is NOT executed when the page is loaded from the server.
+   *
+   * This function is always executed before any other "page-specific" before 
+   * callback.
+   */
+  'out': function(next) {
+    // Do not forget to call next!
+    return next();
+  },
+
+
+  /**
    * This callback is executed just after a page is changed but it is NOT 
    * executed when the page is loaded from the server.
    *
    * This function is always executed before any other "page-specific" after 
    * callback.
    */
-  'after': function(next) {
+  'in': function(next) {
 
     $(".content").velocity("transition.slideDownIn", {
       complete: function(elements) { 
@@ -36,17 +49,5 @@ Benjamin.on({
     return;
   },
 
-
-  /**
-   * This callback is executed when this page is going out to be changed with
-   * another page. It is NOT executed when the page is loaded from the server.
-   *
-   * This function is always executed before any other "page-specific" before 
-   * callback.
-   */
-  'out': function(next) {
-    // Do not forget to call next!
-    return next();
-  }
 
 });
