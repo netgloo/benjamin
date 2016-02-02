@@ -71,15 +71,15 @@ Netgloo's website is built using Benjamin. Take a look: [http://netgloo.com/en](
 Benjamin is a pre-configured [Laravel](http://laravel.com/docs/installation) application. 
 -->
 
-In order to getting started, you have only to [install Benjamin](#installation), run composer and [launch the application](#start-the-application) with `php artisan serve`. Then you can start to build your website.
+[Install Benjamin](#installation), run composer and [launch the application](#start-the-application) with `php artisan serve`. Then you can start to build your website.
 
 Once installed, you can start [adding new web pages](#add-new-pages). You don't have to worry about URLs, they will be automatically deduced by the page's filename stripping out the file extension.
 
 Client side you will have, out of the box, an instant navigation for each link between your web pages. Benjamin will use the `pushState` api to update the URL when a page is changed, but it will automatically fallback to a *standard* navigation if the browser doesn't support `pushState`. 
 
-**Note**: when web pages are directly changed client-side you have to think to your website like a [single-page application](https://en.wikipedia.org/wiki/Single-page_application), this have some implications on how the javascript code is loaded and executed. Take a look to the [Scripts](#scripts) section for more informations.
+**Note**: using Benjamin you have to think to your website like a [Single-Page Application](https://en.wikipedia.org/wiki/Single-page_application) since web pages are directly changed client-side. This have some implications on how the javascript code is loaded and executed. Take a look to the [Scripts](#scripts) section for more informations.
 
-After you added some web pages, you may want to create [layouts](#layouts) to share a common structure between pages, or you may want to play with [page transitions and callbacks](#page-transitions) if you need to control the switching process from a page to another one. Also you may need to add a [contact form](#forms) in your website that will [send an email](#sending-emails) when it is triggered, or you can enable the [multi-language support](#multi-language) if your website need to provide more than one language. You will find all this really simple and straightforward.
+After you added some web pages, you may want to create [layouts](#layouts) to share a common structure between pages, or you can play with [page transitions and callbacks](#page-transitions) if you need to control the switching process from a page to another one. Also you may need to add a [contact form](#forms) in your website that will [send an email](#sending-emails) when it is triggered, or you can enable the [multi-language support](#multi-language) if your website need to provide more than one language. You will find all this really simple and straightforward.
 
 #### For what kind of websites you should consider Benjamin
 
@@ -95,9 +95,9 @@ This is a list of functionalities already supported by Benjamin:
 - Sending forms to the server
 - Multi-language
 
-If your website must have all or some of the functionalities above you can consider to use Benjamin.
+If your website must have all or some of above functionalities you should consider to use Benjamin. If your website needs more advanced features perhaps you may want to use other solutions or you can take in account to customize your Benjamin installation adding features you need.
 
-Benjamin is quite flexible and it can be customized adding new features. Anyway you should avoid to use it if:
+In general, you should avoid to use Benjamin if:
 
 - Your website have some dynamic content that could changes on different requests.
 - Your website is constantly growing in the number of pages and constantly needs to add a lot of new pages.
@@ -507,53 +507,53 @@ The code above first will update the current page path and title for Google Anal
 
 ## Page Transitions
 
-If an user is on page `/a` and he click on a link for page `/b`, following callbacks are executed:
+If an user is on page `/a` and click on a link for page `/b`, following callbacks are executed:
 
-1. `out(next)` global.
-1. `out(next)` for page `/a`.
-1. `insert(next)` global.
-1. `insert(next)` for page `/b`.
-1. `ready()` global.
-1. `ready()` for page `/b`.
+1. `out` global.
+1. `out` for page `/a`.
+1. `in` global.
+1. `in` for page `/b`.
+1. `ready` global.
+1. `ready` for page `/b`.
 
-When a page is loaded directly from the server or when a page is open through back/forward browser's buttons, only `ready` callbacks are executed.
+When a page is loaded directly from the server or when a page is opened through back/forward browser's buttons, only `ready` callbacks are executed.
 
 ### Callbacks
 
-There are two types of callbacks: global and per-page. First one are always executed independently on the current page. Second one are executed only on the given page.
+There are two types of callbacks: **global** and **per-page**. First one are always executed independently on the current page. Second one are executed only on the given page.
 
-You can set your own callback function, inside your JavaScript code, in this way:
+You can set your own callback functions, inside your JavaScript code, in this way:
 
 ``` javascript
 
 // Global callbacks
 
 Benjamin.on({
-  'init': function() { /* ... */ },
-  'ready', function() { /* ... */ },
-  'out', function(next) { /* ... */ }
-  'insert', function(next) { /* ... */ },
+  'init': function() {  },
+  'ready': function() {  },
+  'out': function(next) { return next(); },
+  'in': function(next) { return next(); },
 });
 
 // Per-page callbacks
 
 Benjamin.on('/', {
-  'ready': function() { /* ... */ },
-  'out': function(next) { /* ... */ }
-  'insert': function(next) { /* ... */ },
+  'ready': function() {  },
+  'out': function(next) { return next(); },
+  'in': function(next) { return next(); },
 });
 
 Benjamin.on('/example', {
-  'ready': function() { /* ... */ },
-  'out': function(next) { /* ... */ }
-  'insert': function(next) { /* ... */ },
+  'ready': function() {  },
+  'out': function(next) { return next(); },
+  'in': function(next) { return next(); },
 });
 
 // ...
 
 ```
 
-**Note**: do not put above callbacks definitions inside a `$(document).ready`.
+**Note**: do not put above callbacks definitions inside jQuery's `$(document).ready`.
 
 #### init
 
@@ -567,7 +567,7 @@ Initialize your things.
 
 The page is ready.
 
-- Executed when the page is loaded form the server in the jQuery's document ready event (`$(document).ready`) and after the `insert` callback when the page is changed client-side.
+- Executed when the page is loaded form the server in the jQuery's document ready event (`$(document).ready`) and after the `in` callback when the page is changed client-side.
 - Executed also when the browser's history is navigated (back and forward).
 - This is a good place for binding things on your document (e.g. using `$('.some-element').on(...)`).
 - Both global and per-page versions exists. The global one will be always executed first.
@@ -579,11 +579,11 @@ The page is going to be changed with another page.
 - If you are on page `/a` and a link to an internal page is clicked, this callback is executed before the content of `/a` is replaced.
 - It is **not** executed when the page is loaded from the server neither when the page is showed browsing the browser's history.
 - Both global and per-page versions exists. The global one will be always executed first.
-- Remember to call `next()` to execute the `insert` callback for the page that will be displayed.
+- Remember to call `next()` to execute the `in` callback for the page that will be displayed.
 
-#### insert (`next`)
+#### in (`next`)
 
-The page is loaded client-side.
+The page is changed.
 
 - If a link to `/a` is clicked, this callback is executed when the content of the page `/a` is inside the body.
 - The document's title and the page url refers to the page `/a`.
