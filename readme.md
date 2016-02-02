@@ -1,4 +1,4 @@
-_**!!! IMPORTANT !!!:** Benjamin in under construction in this moment. Version 1.0 will coming soon. Back to visit us in a few days._
+_**!!! IMPORTANT !!!:** Benjamin is currently under construction. Version 1.0 will coming soon. Back to visit us in a few days._
 
 ## Benjamin
 
@@ -448,17 +448,15 @@ Continuing the example above, we can also include in our layout a header and a f
 
 ## Scripts
 
-Using Benjamin you should think at your website as a [Single-Page Application](https://en.wikipedia.org/wiki/Single-page_application) (SPA). This implies that all the scripts included inside the `<head>` tag are loaded and executed only once, when the website is loaded from the server. If the page is dynamically loaded (it is directly changed client-side) such scripts are **not** re-executed for the new page. jQuery's `$(document).ready` function also will run only when the website is loaded the first time and not each time a page is loaded.
+Using Benjamin you should think at your website as a [Single-Page Application](https://en.wikipedia.org/wiki/Single-page_application) (SPA). This implies that all the scripts included inside the `<head>` tag are loaded and executed only once, when the website is loaded from the server. If the page is dynamically loaded (i.e. it is loaded directly client-side) such scripts are **not** re-executed for the new page. jQuery's `$(document).ready` function also will run only when the website is loaded the first time and not on every loaded page.
 
-Use Benjamin's [`ready`](#ready) callback to execute JavaScript code on each loaded page.
+Use Benjamin's [`ready`](#ready) callback to execute JavaScript code each time a page is loaded.
 
-This callback will be executed each time a page will be loaded directly from the server, at the same time jQuery's `$(document).ready` would be executed, and each time a page will be dynamically loaded, after the page transition process is finished.
-
-This is a good place for all the code that initializes page's elements or code that binds page's events. Likely you can put in this callback all the code you would have put inside jQuery's `ready`.
+This callback will be executed each time a page will be loaded directly from the server, at the same time jQuery's `$(document).ready` would be executed, and each time a page will be dynamically loaded, after the page transition process is finished. The `readt` callback is a good place for all the code that initializes page's elements or code that binds page's events. Likely you can put in this callback all the code you would have put inside jQuery's `ready`.
 
 If you have code that must be executed only once and not executed anymore, even changing page, you may want to use the [`init` callback](#init) instead.
 
-**Note**: jQuery is already included inside Benjamin. You don't need to include it and you can use it inside your custom javascript code.
+**Note**: jQuery is already included inside Benjamin. You don't need to include it and you can just use it inside your custom JavaScript code.
 
 ### Scripts Inside The Body
 
@@ -485,13 +483,14 @@ ga('create', 'UA-XXXXX-Y', 'auto');
 
 Replacing the string `'UA-XXXXX-Y'` with your tracking ID. 
 
-The above JavaScript snippet is just the Google official one, taken from [here](https://developers.google.com/analytics/devguides/collection/analyticsjs/), without the last JavaScript instruction `ga('send', 'pageview');`. You should move such instruction inside the Benjamin's [`ready`](#ready) callback, in this way:
+The above JavaScript snippet is just the [Google's official one](https://developers.google.com/analytics/devguides/collection/analyticsjs/), without the last JavaScript instruction `ga('send', 'pageview')`. You should move such instruction inside the Benjamin's [`ready`](#ready) callback, in this way:
 
 ```
 Benjamin.on({
   
   'ready': function() {
 
+    // Add these two lines to tracking page views with Google Analytics
     ga('set', { page: window.location.pathname, title: document.title });
     ga('send', 'pageview');
 
@@ -508,34 +507,41 @@ The code above first will update the current page path and title for Google Anal
 
 ## Page Transitions
 
+If an user is on page `/a` and he click on a link for page `/b`, following callbacks are executed:
+
+1. `out(next)` global.
+1. `out(next)` for page `/a`.
+1. `insert(next)` global.
+1. `insert(next)` for page `/b`.
+1. `ready()` global.
+1. `ready()` for page `/b`.
+
+When a page is loaded directly from the server or when a page is open through back/forward browser's buttons, only `ready` callbacks are executed.
+
 ### Callbacks
 
-Do NOT put them inside `$(document).ready`.
+There are two types of callbacks: global and per-page. First one are always executed independently on the current page. Second one are executed only on the given page.
 
-Global callbacks:
+You can set your own callback function, inside your JavaScript code, in this way:
 
 ``` javascript
+
+// Global callbacks
+
 Benjamin.on({
-  'init': function() {  /* ... */ },
-  'ready', function() {  /* ... */ },
-  'out', function(next) {  /* ... */ }
-  'insert', function(next) {  /* ... */ },
+  'init': function() { /* ... */ },
+  'ready', function() { /* ... */ },
+  'out', function(next) { /* ... */ }
+  'insert', function(next) { /* ... */ },
 });
 
-```
-
-*Per-page* callbacks:
-
-``` javascript
-// Callbacks for page '/'
+// Per-page callbacks
 
 Benjamin.on('/', {
   'ready': function() { /* ... */ },
   'out': function(next) { /* ... */ }
   'insert': function(next) { /* ... */ },
 });
-
-// Callbacks for page '/example'
 
 Benjamin.on('/example', {
   'ready': function() { /* ... */ },
@@ -546,6 +552,8 @@ Benjamin.on('/example', {
 // ...
 
 ```
+
+**Note**: do not put above callbacks definitions inside a `$(document).ready`.
 
 #### init
 
@@ -568,36 +576,20 @@ The page is ready.
 
 The page is going to be changed with another page.
 
-- If you are on page `/a` and a link is clicked, this callback is executed before the content of `/a` is replaced.
-- It is **not** executed when the page is loaded from the server neither when the page is showed navigating in the browser's history.
+- If you are on page `/a` and a link to an internal page is clicked, this callback is executed before the content of `/a` is replaced.
+- It is **not** executed when the page is loaded from the server neither when the page is showed browsing the browser's history.
 - Both global and per-page versions exists. The global one will be always executed first.
 - Remember to call `next()` to execute the `insert` callback for the page that will be displayed.
 
 #### insert (`next`)
 
-The page is changed.
+The page is loaded client-side.
 
 - If a link to `/a` is clicked, this callback is executed when the content of the page `/a` is inside the body.
 - The document's title and the page url refers to the page `/a`.
-- It is **not** executed when the page is loaded from the server neither when the page is showed navigating in the browser's history.
+- It is **not** executed when the page is loaded from the server neither when the page is showed browsing the browser's history.
 - Both global and per-page versions exists. The global one will be always executed first.
 - Remember to call `next()` to execute the `ready` callback for page `/a`.
-
-<!--
-- **Hint**: this is a good place for page transition effect since the page content is inside the `body` and ...
--->
-
-### Example Of A Callbacks Chain
-
-We are on page `/a` and we click on a link for `/b`, following callbacks are executed:
-
-1. `out(next)` global.
-1. `out(next)` for page `/a`.
-1. `insert(next)` global.
-1. `insert(next)` for page `/b`.
-1. `ready()` global.
-1. `ready()` for page `/b`.
-
 
 <!--
 ### Effects
