@@ -17,11 +17,11 @@ Benjamin.on({
 
 
   /**
-   * This callback is executed when this page is going out to be changed with
+   * This callback is executed when this page is going to be changed with
    * another page. It is NOT executed when the page is loaded from the server.
    *
-   * This function is always executed before any other "page-specific" before 
-   * callback.
+   * This function is always executed before any other per-page "out" callback.
+
    */
   'out': function(next) {
     // Do not forget to call next!
@@ -33,8 +33,7 @@ Benjamin.on({
    * This callback is executed just after a page is changed but it is NOT 
    * executed when the page is loaded from the server.
    *
-   * This function is always executed before any other "page-specific" after 
-   * callback.
+   * This function is always executed before any other per-page "in" callback.
    */
   'in': function(next) {
 
